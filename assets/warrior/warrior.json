@@ -1,0 +1,18 @@
+{
+  "sourceImage": "artifacts/knight_front.png",
+  "sourceImageSha256": "49eb6570d55f6a030e884f3bd35bd2d0a7ff43a54f050c7e8955a1603e94a488",
+  "sourceVideo": "D:\\传智杯用\\图片\\角色\\战士鱼_攻击动画.mp4",
+  "frameWidth": 300,
+  "frameHeight": 400,
+  "cols": 8,
+  "rows": 5,
+  "frames": 37,
+  "fps": 12,
+  "playbackSpeed": 2.5,
+  "impactFrame": 21,
+  "spriteHeightTiles": 3.0,
+  "feetAtTilePct": 0.82,
+  "footY": 351.1,
+  "footFraction": 0.87771,
+  "characterHeightPx": 214.0
+}
