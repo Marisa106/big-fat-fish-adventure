@@ -1,0 +1,18 @@
+{
+  "sourceImage": "D:\\传智杯用\\图片\\角色\\20261108_gpt-image-2_01.png",
+  "sourceImageSha256": "5cfcfcea3fa1e2dac4d71a0a3bbfd44324a2f88c7cdbc9081b251171135d4894",
+  "sourceVideo": "D:\\传智杯用\\图片\\角色\\kling_20261108_作品__参考图_以上传的Q_83_0.mp4",
+  "frameWidth": 300,
+  "frameHeight": 400,
+  "cols": 8,
+  "rows": 5,
+  "frames": 37,
+  "fps": 12,
+  "playbackSpeed": 2.5,
+  "impactFrame": 19,
+  "heightTiles": 3.9,
+  "feetAtTilePct": 0.82,
+  "footY": 293.8,
+  "footFraction": 0.7344,
+  "characterHeightPx": 164.1
+}
