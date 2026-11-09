@@ -5,7 +5,7 @@
   "description": "大肥鱼历险记 · DeepSeek 认知冒险 —— 零依赖的回合制棋盘 + AI 问答科普游戏",
   "scripts": {
     "start": "node tools/server.mjs",
-    "test": "node --test --test-isolation=none tests",
+    "test": "node --test tests",
     "sim": "node tools/simulate.js --runs 200",
     "screens": "node tools/capture.mjs",
     "verify:warrior": "node tools/verify_warrior.mjs",
