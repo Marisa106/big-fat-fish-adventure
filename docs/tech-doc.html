@@ -378,13 +378,13 @@
     </div>
   </div>
 
-  <p class="lead">复现的敌人不是代码，而是环境。这个项目用「零运行时依赖 + 无构建 + 素材随包」把环境熵压到最低：评委机器只需要一个浏览器；要跑自动化再加 Node 18+；Python 与 ffmpeg 只在重建美术素材时才需要。</p>
+  <p class="lead">复现的敌人不是代码，而是环境。这个项目用「零运行时依赖 + 无构建 + 素材随包」把环境熵压到最低：评委机器只需要一个浏览器；要跑自动化再加 Node 22+（代理 18+ 即可）；Python 与 ffmpeg 只在重建美术素材时才需要。</p>
 
   <h2>2.1 依赖清单：必需、可选、仅重建素材</h2>
   <table class="data">
     <tr><th style="width:17%">层级</th><th style="width:27%">依赖</th><th>用途与不装的后果</th></tr>
     <tr><td><b>必需</b></td><td>Chrome / Edge（较新版本）</td><td>运行游戏。支持 ES2020、CSS Grid、WebP、WebAudio、H.264。旧浏览器可能无法播放结局成片。</td></tr>
-    <tr><td><b>可选</b></td><td>Node.js 18+ / npm</td><td>本地静态服务器 + DeepSeek 代理、单元测试、平衡模拟、截图 E2E。不装只能双击玩离线模式。</td></tr>
+    <tr><td><b>可选</b></td><td>Node.js 22+ / npm</td><td>本地静态服务器 + DeepSeek 代理、单元测试、平衡模拟、截图 E2E。不装只能双击玩离线模式。</td></tr>
     <tr><td><b>可选</b></td><td>Chrome / Edge</td><td><code>npm run screens</code> 的真实视口截图与 E2E；不影响游戏本身。</td></tr>
     <tr><td><b>仅重建素材</b></td><td>Python 3.10+、Pillow、numpy、ffmpeg</td><td>从原始立绘/视频重新生成图集与成片。普通复现完全不需要。</td></tr>
   </table>

@@ -5,7 +5,7 @@
 当前仓库已经完成：
 
 - `git init`，分支 `main`；
-- 23 个按功能模块拆分的提交（2026-11-01 至 2026-11-09）；
+- 24 个按功能模块拆分的提交（2026-11-01 至 2026-11-09）；
 - 首个提交只包含工程约定，不是 `initial commit` 全量代码；
 - `.env`、`artifacts/idle/`、`docs/build/` 等中间产物已在 `.gitignore` 中排除。
 
@@ -15,20 +15,14 @@
 
 ```powershell
 git log --oneline --reverse
-git rev-list --count HEAD     # 应为 23（含本指南与路径清理）
+git rev-list --count HEAD     # 应为 24
 git status                    # 应为 clean
 git remote -v                 # 应为空（还没有远端）
 ```
 
 如果 `git status` 不干净，先提交或还原，不要带着未提交改动推送。
 
-**作者身份**：当前提交作者为本地占位身份 `Big Fat Fish Dev <dev@bigfatfish.local>`。如果希望 GitHub/Gitee 显示你的账号，请在推送前改成你的 Git 显示名与邮箱；否则提交仍然有效，但不会计入你的贡献图。
-
-```powershell
-git config user.name "你的显示名"
-git config user.email "你的邮箱"
-# 注意：这只影响之后的提交；已有 23 条提交的作者需重写历史（可让 AI 按同一提交计划重建，或使用 git filter-repo）
-```
+**作者身份**：24 条提交已统一为 `Marisa_Magical <199616031+Marisa106@users.noreply.github.com>`，与 GitHub 账号 [Marisa106](https://github.com/Marisa106) 对应；后续提交沿用该身份即可。
 
 ---
 
@@ -68,7 +62,7 @@ git push -u origin main
 https://github.com/<你的用户名>/big-fat-fish-adventure
 ```
 
-应能看到 README、23 条提交、`docs/` 与 `assets/`；点 **Commits** 应看到从 `chore: 初始化零依赖工程与仓库约定` 开始的完整历史。
+应能看到 README、24 条提交、`docs/` 与 `assets/`；点 **Commits** 应看到从 `chore: 初始化零依赖工程与仓库约定` 开始的完整历史。
 
 ---
 
@@ -107,7 +101,7 @@ Gitee 首次推送通常使用账号密码或私人令牌；按页面提示完�
 https://gitee.com/<你的用户名>/big-fat-fish-adventure
 ```
 
-点「提交」应看到 23 条提交；点「代码」应能看到 `index.html`、`docs/`、`assets/`。
+点「提交」应看到 24 条提交；点「代码」应能看到 `index.html`、`docs/`、`assets/`。
 
 ---
 
@@ -132,7 +126,7 @@ git push gitee main
 
 ## 5. 大仓库推送注意事项
 
-当前 `.git` 约 106 MB（含 25 张截图、验收图、4 段结局成片与 BGM）。首次推送可能需要几分钟。
+当前 `.git` 约 110 MB（含 25 张截图、验收图、4 段结局成片与 BGM）。首次推送可能需要几分钟。
 
 如果推送中断：
 
@@ -157,8 +151,8 @@ git push -u origin main
 ```powershell
 git log --oneline --reverse
 git log --stat --oneline
-git show --stat 2d5cb29      # 开发者模式这一次提交
-git show 2d5cb29:index.html  # 查看该提交下的标题页
+git show --stat c7c6270      # 开发者模式这一次提交
+git show c7c6270:index.html  # 查看该提交下的标题页
 ```
 
 评委常看的点：
@@ -190,7 +184,7 @@ git show 2d5cb29:index.html  # 查看该提交下的标题页
 
 - [ ] 仓库为 Public，或已给评委只读权限
 - [ ] 默认分支 `main`
-- [ ] `git rev-list --count HEAD` ≥ 23
+- [ ] `git rev-list --count HEAD` ≥ 24
 - [ ] 首条提交不是全量代码
 - [ ] 提交说明能对应功能模块 / AI 对话
 - [ ] `docs/`、`assets/`、`tests/`、`tools/` 均已上传
