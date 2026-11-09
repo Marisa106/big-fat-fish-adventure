@@ -185,6 +185,17 @@
     updateGalleryLabel();
   }
 
+  /* 开发者模式：确认后解锁全部结局并直接打开图鉴，便于评委逐个验收 CG */
+  function openDevMode() {
+    Modals.confirmDevUnlock(Endings.ENDINGS.length, function () {
+      const count = EndingsUI.unlockAll();
+      updateGalleryLabel();
+      Audio.play('level');
+      toast('开发者模式：已解锁 ' + count + ' / ' + Endings.ENDINGS.length + ' 个结局');
+      openGallery();
+    });
+  }
+
   async function startRun(classId, options) {
     const opts = options || {};
     Audio.unlock();
@@ -1042,6 +1053,7 @@
     bind('#btn-rules', function () { Modals.rules(); });
     bind('#btn-gallery', function () { Audio.play('click'); openGallery(); });
     bind('#btn-api', function () { Audio.play('click'); openApiSettings(); });
+    bind('#btn-dev', function () { Audio.unlock(); Audio.play('click'); openDevMode(); });
     bind('#btn-mute-title', toggleMute);
     bind('#btn-music-title', toggleMusic);
     bind('#btn-story-next', function () { Audio.play('click'); showScreen('class'); });
@@ -1064,7 +1076,7 @@
       const screen = params.get('screen');
       if (params.get('unlock') === 'all') {
         /* 截图用：一次性解锁全部结局，方便验收图鉴与各结局 CG */
-        Endings.ENDINGS.forEach(function (ending) { EndingsUI.unlockEnding(ending.id); });
+        EndingsUI.unlockAll();
         updateGalleryLabel();
       }
       if (screen === 'story' || screen === 'class') {

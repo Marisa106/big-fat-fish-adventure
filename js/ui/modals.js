@@ -522,6 +522,45 @@
     openModal(content, { narrow: true, dismissible: true });
   }
 
+  /* ---------- 开发者模式：解锁全部结局确认 ---------- */
+  function confirmDevUnlock(total, onConfirm) {
+    const content = [
+      h('div', { class: 'modal-head' }, [
+        h('div', {}, [
+          h('h2', { class: 'modal-title', text: '进入开发者模式？' }),
+          h('p', { class: 'modal-sub', text: '该功能面向比赛评委、验收与录屏，普通游玩不需要使用。' })
+        ])
+      ]),
+      h('div', { class: 'dev-confirm' }, [
+        h('div', { class: 'dev-confirm-badge', text: '🛠 DEV' }),
+        h('p', { text: '确认后会立即把全部 ' + total + ' 个结局写入本机图鉴，并打开结局图鉴，方便逐个重播结局 CG。' }),
+        h('ul', {}, [
+          h('li', { text: '只修改本机浏览器 localStorage 中的 bq.endings，不上传任何数据。' }),
+          h('li', { text: '不会修改关卡进度、认知档案或战斗数值。' }),
+          h('li', { text: '解锁后无法在本界面撤销；如需恢复，可在浏览器控制台删除 bq.endings。' })
+        ])
+      ]),
+      h('div', { class: 'modal-actions' }, [
+        h('button', {
+          class: 'btn',
+          type: 'button',
+          text: '取消',
+          onclick: function () { closeModal(); }
+        }),
+        h('button', {
+          class: 'btn btn-primary',
+          type: 'button',
+          text: '确认解锁全部 CG',
+          onclick: function () {
+            closeModal();
+            onConfirm();
+          }
+        })
+      ])
+    ];
+    openModal(content, { narrow: true, dismissible: true, className: 'dev-confirm-modal' });
+  }
+
   /* ---------- 统计与胜负 ---------- */
   function statGrid(state) {
     const elapsed = Date.now() - state.stats.startedAt;

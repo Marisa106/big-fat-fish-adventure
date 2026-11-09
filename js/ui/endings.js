@@ -40,6 +40,16 @@
     return list;
   }
 
+  /* 开发者模式：一次写入全部结局，返回去重后的数量 */
+  function unlockAll() {
+    const list = loadUnlocked();
+    Endings.ENDINGS.forEach(function (ending) {
+      if (list.indexOf(ending.id) < 0) list.push(ending.id);
+    });
+    saveUnlocked(list);
+    return list.length;
+  }
+
   const SCENES = {
     rice: {
       bg: 'home',
@@ -436,5 +446,6 @@
     gallery: gallery,
     loadUnlocked: loadUnlocked,
     unlockEnding: unlockEnding,
+    unlockAll: unlockAll
   };
 })(typeof globalThis !== 'undefined' ? globalThis : this);
