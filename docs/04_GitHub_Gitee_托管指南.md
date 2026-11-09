@@ -5,7 +5,7 @@
 当前仓库已经完成：
 
 - `git init`，分支 `main`；
-- 26 个按功能模块拆分的提交（2026-11-01 至 2026-11-09）；
+- 27 个按功能模块拆分的提交（2026-11-01 至 2026-11-09）；
 - 首个提交只包含工程约定，不是 `initial commit` 全量代码；
 - `.env`、`artifacts/idle/`、`docs/build/` 等中间产物已在 `.gitignore` 中排除。
 
@@ -15,14 +15,14 @@
 
 ```powershell
 git log --oneline --reverse
-git rev-list --count HEAD     # 应为 26
+git rev-list --count HEAD     # 应为 27
 git status                    # 应为 clean
 git remote -v                 # 应为空（还没有远端）
 ```
 
 如果 `git status` 不干净，先提交或还原，不要带着未提交改动推送。
 
-**作者身份**：26 条提交已统一为 `Marisa_Magical <199616031+Marisa106@users.noreply.github.com>`，与 GitHub 账号 [Marisa106](https://github.com/Marisa106) 对应；后续提交沿用该身份即可。
+**作者身份**：27 条提交已统一为 `Marisa_Magical <199616031+Marisa106@users.noreply.github.com>`，与 GitHub 账号 [Marisa106](https://github.com/Marisa106) 对应；后续提交沿用该身份即可。
 
 ---
 
@@ -62,7 +62,7 @@ git push -u origin main
 https://github.com/<你的用户名>/big-fat-fish-adventure
 ```
 
-应能看到 README、26 条提交、`docs/` 与 `assets/`；点 **Commits** 应看到从 `chore: 初始化零依赖工程与仓库约定` 开始的完整历史。
+应能看到 README、27 条提交、`docs/` 与 `assets/`；点 **Commits** 应看到从 `chore: 初始化零依赖工程与仓库约定` 开始的完整历史。
 
 ---
 
@@ -101,7 +101,7 @@ Gitee 首次推送通常使用账号密码或私人令牌；按页面提示完�
 https://gitee.com/<你的用户名>/big-fat-fish-adventure
 ```
 
-点「提交」应看到 26 条提交；点「代码」应能看到 `index.html`、`docs/`、`assets/`。
+点「提交」应看到 27 条提交；点「代码」应能看到 `index.html`、`docs/`、`assets/`。
 
 ---
 
@@ -184,7 +184,7 @@ git show c7c6270:index.html  # 查看该提交下的标题页
 
 - [ ] 仓库为 Public，或已给评委只读权限
 - [ ] 默认分支 `main`
-- [ ] `git rev-list --count HEAD` ≥ 26
+- [ ] `git rev-list --count HEAD` ≥ 27
 - [ ] 首条提交不是全量代码
 - [ ] 提交说明能对应功能模块 / AI 对话
 - [ ] `docs/`、`assets/`、`tests/`、`tools/` 均已上传
