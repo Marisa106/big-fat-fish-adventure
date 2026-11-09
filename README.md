@@ -19,7 +19,7 @@
 - [10 分钟极速复现指南](docs/01_10分钟极速复现指南.md) —— 依赖、环境变量、命令、故障排查
 - [AI 交互 Prompt 链](docs/02_AI交互Prompt链.md) —— 3 次核心迭代与 6 条可复用 Prompt
 - [技术文档 PDF](docs/大肥鱼历险记_技术文档.pdf) —— 27 页：意图控制、架构、可复现性
-- [Git 提交历史说明](docs/03_Git提交历史说明.md) —— 22 个提交与 AI 对话/功能模块的对照
+- [Git 提交历史说明](docs/03_Git提交历史说明.md) —— 23 个提交与 AI 对话/功能模块的对照
 - [GitHub/Gitee 托管指南](docs/04_GitHub_Gitee_托管指南.md) —— 公开仓库、评审权限与推送步骤
 - [环境变量模板](.env.example) —— 复制为 `.env` 后 `npm start`
 
@@ -239,6 +239,14 @@ npm run assets:warrior   # 需要 Python + Pillow + numpy + ffmpeg
 npm run verify:warrior   # 真实 Chrome：立绘尺寸、37 帧播放、收招回待机、无运行时错误
 npm run assets:mage      # 同上，读 20261108_gpt-image-2_01.png 与 kling…_83_0.mp4
 npm run verify:mage      # 法师版：同样的 8 张截图与帧推进检查
+```
+
+原始立绘与攻击视频不随比赛包分发；重建素材时默认读取 `sources/`，也可用环境变量指定：
+
+```powershell
+$env:BIGFISH_SOURCE_DIR = "D:\你的素材目录"
+# 目录结构：characters/  monsters/  map/  portals/
+npm run assets:warrior
 ```
 
 ## DeepSeek API 接入

@@ -18,11 +18,14 @@ from PIL import Image, ImageFilter
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_DIR = os.path.join(ROOT, "assets", "map")
 
-# (输出文件名, 源图, 四周留白比例)
+SOURCE_DIR = os.environ.get("BIGFISH_SOURCE_DIR", os.path.join(ROOT, "sources"))
+MAP_SRC = os.path.join(SOURCE_DIR, "map")
+
+# (输出文件名, 源图, 四周留白比例)；源素材不随包分发
 SOURCES = [
-    ("grass-a.png", r"C:\Users\Yuan106\.dsh\attachments\v1\objects\a5\a5d392d17d0559d2f3eb0cb1142b59b8688aca0b76151ae1676ecf6ebf629649", 0.04),
-    ("grass-b.png", r"C:\Users\Yuan106\.dsh\attachments\v1\objects\3a\3ac2d716b3899674d33aebaf89015f4d7e5601622acddb29f2839c5ad6b4dd04", 0.04),
-    ("tree-a.png", r"C:\Users\Yuan106\.dsh\attachments\v1\objects\45\4598fcf8494bb3f235d88a79ba00a0ed658daea49252c3c849c564b619dd0b05", 0.02),
+    ("grass-a.png", os.path.join(MAP_SRC, "grass-a.png"), 0.04),
+    ("grass-b.png", os.path.join(MAP_SRC, "grass-b.png"), 0.04),
+    ("tree-a.png", os.path.join(MAP_SRC, "tree-a.png"), 0.02),
 ]
 
 SIZE = 256

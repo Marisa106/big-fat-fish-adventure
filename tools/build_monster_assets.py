@@ -8,13 +8,16 @@
 用法（在项目根目录）：
     python tools/build_monster_assets.py
 """
+import os
 from pathlib import Path
 
 import numpy as np
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-MONSTER_SRC = Path(r"D:\传智杯用\图片\怪物")
+SOURCE_DIR = Path(os.environ.get("BIGFISH_SOURCE_DIR", ROOT / "sources"))
+MONSTER_SRC = SOURCE_DIR / "monsters"
+PORTAL_SRC = SOURCE_DIR / "portals"
 OUT_MONSTERS = ROOT / "assets" / "monsters"
 OUT_PORTALS = ROOT / "assets" / "portals"
 
@@ -37,9 +40,9 @@ SPRITES = {
 
 # 输出文件名 -> 附件里的洋红底原图
 PORTALS = {
-    "portal-left.png": r"C:\Users\Yuan106\.dsh\attachments\v1\objects\eb\eb9ee1f5492f8636cede10a5978a0d577be891fec8bab20fa3dbcaa72c8ceb20",
-    "portal-bottom.png": r"C:\Users\Yuan106\.dsh\attachments\v1\objects\35\357fdf9f800d62513a7080d8cfc7fd42881debc1beb808e18a0e766b2c5172b5",
-    "portal-right.png": r"C:\Users\Yuan106\.dsh\attachments\v1\objects\36\36ca08e595cedd65b0184cf9868445a60b735d1ca54fe4ba124a2dd2c40a6942",
+    "portal-left.png": str(PORTAL_SRC / "portal-left.png"),
+    "portal-bottom.png": str(PORTAL_SRC / "portal-bottom.png"),
+    "portal-right.png": str(PORTAL_SRC / "portal-right.png"),
 }
 
 

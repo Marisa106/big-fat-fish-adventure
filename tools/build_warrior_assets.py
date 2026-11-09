@@ -2,9 +2,8 @@
 """构建战士·铁甲鱼（深海骑士）的待机立绘与攻击动画精灵图。
 
 素材来源（原样读取，不重绘角色）：
-    立绘  D:\\传智杯用\\图片\\角色\\15cf554c-骑士_正面.png
-          （仓库内同哈希副本：artifacts/knight_front.png）
-    动画  D:\\传智杯用\\图片\\角色\\战士鱼_攻击动画.mp4（24fps / 3.04s / 1244x1660）
+    立绘  artifacts/knight_front.png（原图同哈希副本）
+    动画  sources/characters/warrior_attack.mp4（24fps / 3.04s / 1244x1660）
 
 输出：
     assets/warrior/portrait.png        原始立绘，字节完全一致，仅作留档
@@ -34,7 +33,8 @@ ARTIFACT_DIR = os.path.join(ROOT, "artifacts")
 
 PORTRAIT_SRC = os.path.join(ARTIFACT_DIR, "knight_front.png")
 PORTRAIT_EXPECTED_SHA256 = "49eb6570d55f6a030e884f3bd35bd2d0a7ff43a54f050c7e8955a1603e94a488"
-VIDEO_SRC = r"D:\传智杯用\图片\角色\战士鱼_攻击动画.mp4"
+SOURCE_DIR = os.environ.get("BIGFISH_SOURCE_DIR", os.path.join(ROOT, "sources"))
+VIDEO_SRC = os.path.join(SOURCE_DIR, "characters", "warrior_attack.mp4")
 
 # 输出画布：与视频同比例（1244:1660 = 3:4），保证待机与攻击完全同尺度
 FRAME_W, FRAME_H = 300, 400
@@ -47,8 +47,6 @@ FEET_AT_TILE_PCT = 0.82     # 脚底落在格子高度的 82% 处
 
 FFMPEG_CANDIDATES = [
     os.environ.get("FFMPEG", ""),
-    r"C:\Users\Yuan106\.dsh-wallpaper-engine\ffmpeg\ffmpeg.exe",
-    r"C:\Users\Yuan106\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\ffmpeg\ffmpeg.exe",
     shutil.which("ffmpeg") or "",
 ]
 
@@ -268,7 +266,7 @@ def main():
         meta = {
             "sourceImage": "artifacts/knight_front.png",
             "sourceImageSha256": actual,
-            "sourceVideo": VIDEO_SRC,
+            "sourceVideo": "sources/characters/warrior_attack.mp4",
             "frameWidth": FRAME_W,
             "frameHeight": FRAME_H,
             "cols": COLS,

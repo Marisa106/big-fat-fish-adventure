@@ -1,7 +1,7 @@
 {
   "sourceImage": "artifacts/knight_front.png",
   "sourceImageSha256": "49eb6570d55f6a030e884f3bd35bd2d0a7ff43a54f050c7e8955a1603e94a488",
-  "sourceVideo": "D:\\传智杯用\\图片\\角色\\战士鱼_攻击动画.mp4",
+  "sourceVideo": "sources/characters/warrior_attack.mp4",
   "frameWidth": 300,
   "frameHeight": 400,
   "cols": 8,

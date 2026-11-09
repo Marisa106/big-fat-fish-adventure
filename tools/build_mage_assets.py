@@ -2,8 +2,8 @@
 """构建魔法师·灵光鱼（蓝发女仆法师）的待机立绘与攻击动画精灵图。
 
 素材来源（原样读取，不重绘角色）：
-    立绘   D:\\传智杯用\\图片\\角色\\20261108_gpt-image-2_01.png（1536x2048，白底）
-    动画   D:\\传智杯用\\图片\\角色\\kling_20261108_作品__参考图_以上传的Q_83_0.mp4
+    立绘   sources/characters/mage_portrait.png（1536x2048，白底）
+    动画   sources/characters/mage_attack.mp4
            （836x1116，24fps，3.04s，白→绿渐变背景）
 
 输出（assets/mage/）：
@@ -34,8 +34,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_DIR = os.path.join(ROOT, "assets", "mage")
 ARTIFACT_DIR = os.path.join(ROOT, "artifacts")
 
-PORTRAIT_SRC = r"D:\传智杯用\图片\角色\20261108_gpt-image-2_01.png"
-VIDEO_SRC = r"D:\传智杯用\图片\角色\kling_20261108_作品__参考图_以上传的Q_83_0.mp4"
+SOURCE_DIR = os.environ.get("BIGFISH_SOURCE_DIR", os.path.join(ROOT, "sources"))
+PORTRAIT_SRC = os.path.join(SOURCE_DIR, "characters", "mage_portrait.png")
+VIDEO_SRC = os.path.join(SOURCE_DIR, "characters", "mage_attack.mp4")
 
 FRAME_W, FRAME_H = 300, 400
 COLS = 8
@@ -46,8 +47,6 @@ FEET_AT_TILE_PCT = 0.82
 
 FFMPEG_CANDIDATES = [
     os.environ.get("FFMPEG", ""),
-    r"C:\Users\Yuan106\.dsh-wallpaper-engine\ffmpeg\ffmpeg.exe",
-    r"C:\Users\Yuan106\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\ffmpeg\ffmpeg.exe",
     shutil.which("ffmpeg") or "",
 ]
 
@@ -312,9 +311,9 @@ def main():
 
         height_tiles = round(CHAR_TILES * FRAME_H / char_h_canvas, 2)
         meta = {
-            "sourceImage": PORTRAIT_SRC,
+            "sourceImage": "sources/characters/mage_portrait.png",
             "sourceImageSha256": sha,
-            "sourceVideo": VIDEO_SRC,
+            "sourceVideo": "sources/characters/mage_attack.mp4",
             "frameWidth": FRAME_W,
             "frameHeight": FRAME_H,
             "cols": COLS,
