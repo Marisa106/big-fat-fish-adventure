@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07110f">
+  <title>大肥鱼历险记</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 标题 -->
+    <section id="screen-title" class="screen screen-title">
+      <div class="title-orb orb-a" aria-hidden="true"></div>
+      <div class="title-orb orb-b" aria-hidden="true"></div>
+      <div class="title-orb orb-c" aria-hidden="true"></div>
+      <div class="title-stars" aria-hidden="true"></div>
+      <div class="title-card">
+        <div class="title-fish" aria-hidden="true">🐟</div>
+        <h1 class="title-text">大肥鱼历险记</h1>
+        <p class="title-sub">一只大肥鱼的归家之路</p>
+        <div class="title-actions">
+          <button id="btn-start" class="btn btn-primary" type="button">开始冒险</button>
+          <button id="btn-rules" class="btn" type="button">玩法说明</button>
+        </div>
+        <div class="title-meta">
+          <button id="btn-mute-title" class="btn btn-small" type="button">🔊 音效开</button>
+          <span id="best-record" class="best-record"></span>
+        </div>
+      </div>
+      <p class="title-foot">在破旧的古代森林遗迹里，击败终焉电饭煲，拿回传送符文，回家吃饭。</p>
+    </section>
+
+    <!-- 剧情 -->
+    <section id="screen-story" class="screen screen-story hidden">
+      <div class="story-card">
+        <div class="story-fish" aria-hidden="true">🐟</div>
+        <h2 class="story-title">传送事故</h2>
+        <div id="story-lines" class="story-lines"><p>大肥鱼原本过着吃了睡、睡了吃的幸福生活。</p><p>一场意外的传送，把它卷进了破旧的古代森林遗迹。</p><p>传说遗迹最深处的电饭煲里，藏着唯一能送它回家的传送符文。</p><p>拿起武器，打穿遗迹——然后回家吃饭！</p></div>
+        <div class="story-actions">
+          <button id="btn-story-next" class="btn btn-primary" type="button">继续</button>
+          <button id="btn-story-skip" class="btn" type="button">跳过</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 选职业 -->
+    <section id="screen-class" class="screen screen-class hidden">
+      <div class="class-head">
+        <h2>选择你的职业</h2>
+        <p>两条道路，一只肥鱼。选好就出发。</p>
+      </div>
+      <div id="class-cards" class="class-cards"><div class="class-card" role="button" tabindex="0" aria-label="选择战士·铁甲鱼" style="--class-glow: #e8b04b33;"><div><span class="class-emoji">🛡️</span><span class="class-fish">🐟</span></div><h3>战士·铁甲鱼</h3><div class="class-tag">铁鳞护身，斧劈全场</div><div class="class-stats"><div class="class-stat">生命<b>120</b></div><div class="class-stat">攻击<b>12</b></div><div class="class-stat">射程<b>1</b></div><div class="class-stat">行动点<b>4</b></div></div><p class="class-weapon">🪓 沉木巨斧：每级攻击 +4；Lv3/6/9 额外 +25 最大生命并回复等量</p><button class="btn btn-primary class-pick" type="button">选择战士</button></div><div class="class-card" role="button" tabindex="0" aria-label="选择魔法师·灵光鱼" style="--class-glow: #7fd3ff33;"><div><span class="class-emoji">🔮</span><span class="class-fish">🐟</span></div><h3>魔法师·灵光鱼</h3><div class="class-tag">灵光引路，术法焚敌</div><div class="class-stats"><div class="class-stat">生命<b>80</b></div><div class="class-stat">攻击<b>9</b></div><div class="class-stat">射程<b>2</b></div><div class="class-stat">行动点<b>4</b></div></div><p class="class-weapon">🪄 苔纹法杖：每级攻击 +3；Lv2/5/8 射程 +1；Lv4/7/10 溅射相邻敌人</p><button class="btn btn-primary class-pick" type="button">选择魔法师</button></div></div>
+      <button id="btn-class-back" class="btn btn-small class-back" type="button">← 返回标题</button>
+    </section>
+
+    <!-- 游戏主界面 -->
+    <section id="screen-game" class="screen screen-game hidden">
+      <header id="topbar" class="topbar"></header>
+      <main class="game-main">
+        <div class="board-frame" id="board-frame">
+          <div id="board" class="board" role="grid" aria-label="古代森林遗迹棋盘"></div>
+          <div id="board-fx" class="board-fx"></div>
+          <div id="stage-banner" class="stage-banner hidden"></div>
+        </div>
+        <aside id="sidebar" class="sidebar"></aside>
+      </main>
+      <footer id="dock" class="dock"></footer>
+    </section>
+
+    <div id="modal-root" class="modal-root hidden"></div>
+    <div id="cine-root" class="cine-root hidden"></div>
+    <div id="toast-root" class="toast-root"></div>
+    <div id="selftest-result" hidden="" data-status="pass">PASS stage=10 kills=11 tokens=39</div>
+  </div>
+
+  <script src="js/core/config.js"></script>
+  <script src="js/core/rng.js"></script>
+  <script src="js/core/grid.js"></script>
+  <script src="js/core/stats.js"></script>
+  <script src="js/core/combat.js"></script>
+  <script src="js/core/skills.js"></script>
+  <script src="js/core/monsters.js"></script>
+  <script src="js/core/shop.js"></script>
+  <script src="js/core/state.js"></script>
+  <script src="js/core/progression.js"></script>
+  <script src="js/ui/dom.js"></script>
+  <script src="js/ui/audio.js"></script>
+  <script src="js/ui/render.js"></script>
+  <script src="js/ui/hud.js"></script>
+  <script src="js/ui/modals.js"></script>
+  <script src="js/ui/cinematics.js"></script>
+  <script src="js/ui/input.js"></script>
+  <script src="js/main.js"></script>
+
+
+</body></html>
