@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  @page { size: A4; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 297mm; overflow: hidden; }
+  body {
+    width: 210mm; height: 297mm; overflow: hidden;
+    font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    color: #eaf6ef;
+    background:
+      radial-gradient(900px 700px at 18% 12%, rgba(63,191,165,.22), transparent 60%),
+      radial-gradient(800px 620px at 88% 78%, rgba(74,168,255,.16), transparent 62%),
+      radial-gradient(700px 500px at 72% 18%, rgba(233,196,106,.10), transparent 60%),
+      linear-gradient(155deg, #071a16 0%, #04100e 46%, #061713 100%);
+    position: relative;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(126,196,166,.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(126,196,166,.055) 1px, transparent 1px);
+    background-size: 14mm 14mm;
+    mask-image: radial-gradient(circle at 50% 46%, rgba(0,0,0,.9), transparent 78%);
+  }
+  .halo {
+    position: absolute; width: 118mm; height: 118mm; border-radius: 50%;
+    border: 1px solid rgba(233,196,106,.20);
+    left: 50%; top: 46%; transform: translate(-50%,-50%);
+  }
+  .halo.h2 { width: 146mm; height: 146mm; border-color: rgba(126,196,166,.13); }
+  .halo.h3 { width: 174mm; height: 174mm; border-color: rgba(126,196,166,.07); }
+  .whale {
+    position: absolute; right: 4mm; bottom: -2mm;
+    font-size: 112mm; line-height: 1; opacity: .055; transform: rotate(-8deg);
+    filter: grayscale(1);
+  }
+  .topline {
+    position: absolute; left: 18mm; right: 18mm; top: 18mm;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 8.5pt; letter-spacing: .22em; color: #8bad9f;
+  }
+  .topline b { color: #e9c46a; font-weight: 600; letter-spacing: .16em; }
+  .main {
+    position: absolute; left: 20mm; right: 20mm; top: 64mm;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 3mm;
+    font-size: 9pt; letter-spacing: .3em; color: #9fc6b5;
+    text-transform: uppercase;
+  }
+  .kicker::before { content: ""; width: 14mm; height: 1px; background: #e9c46a; display: inline-block; }
+  h1 {
+    margin: 8mm 0 0; font-family: "Noto Serif SC", "Noto Sans SC", serif;
+    font-size: 38pt; line-height: 1.12; letter-spacing: .04em; font-weight: 700;
+    color: #f4fbf7;
+  }
+  .sub {
+    margin-top: 4mm; font-size: 15pt; letter-spacing: .28em; color: #9fd3c2; font-weight: 300;
+  }
+  .rule { margin: 12mm 0 8mm; width: 100%; height: 1px; background: linear-gradient(90deg, rgba(233,196,106,.65), rgba(233,196,106,.08)); }
+  .doc-type {
+    font-family: "Noto Serif SC", serif; font-size: 27pt; letter-spacing: .28em; color: #e9c46a;
+  }
+  .doc-en { margin-top: 2mm; font-size: 8pt; letter-spacing: .35em; color: #6f8f82; }
+  .meta {
+    position: absolute; left: 20mm; right: 20mm; bottom: 30mm;
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .meta .left { font-size: 9pt; line-height: 1.9; color: #8fae9f; }
+  .meta .left b { color: #dcefe5; font-weight: 500; }
+  .badge {
+    border: 1px solid rgba(233,196,106,.38); border-radius: 999px;
+    padding: 3mm 6mm; font-size: 8.5pt; letter-spacing: .12em; color: #e9c46a;
+    background: rgba(233,196,106,.06);
+  }
+  .foot {
+    position: absolute; left: 20mm; right: 20mm; bottom: 14mm;
+    display: flex; justify-content: space-between;
+    font-size: 7.5pt; letter-spacing: .18em; color: #567368;
+  }
+  .dots { display: flex; gap: 2.2mm; margin-top: 4mm; }
+  .dots i { width: 2.1mm; height: 2.1mm; border-radius: 50%; background: rgba(233,196,106,.75); display: block; }
+  .dots i:nth-child(4n) { background: rgba(63,191,165,.8); }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="halo h3"></div>
+  <div class="halo h2"></div>
+  <div class="halo"></div>
+  <div class="whale">🐳</div>
+
+  <div class="topline">
+    <span><b>BIG FAT FISH</b> / DEEPSEEK COGNITIVE ADVENTURE</span>
+    <span>COMPETITION EDITION · 2026</span>
+  </div>
+
+  <div class="main">
+    <div class="kicker">参赛技术文档</div>
+    <h1>大肥鱼历险记</h1>
+    <div class="sub">DeepSeek 认知冒险</div>
+    <div class="rule"></div>
+    <div class="doc-type">技术文档</div>
+    <div class="doc-en">INTENT CONTROL · ARCHITECTURE · REPRODUCIBILITY</div>
+    <div class="dots">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+  </div>
+
+  <div class="meta">
+    <div class="left">
+      <div><b>零依赖</b> · 双击即玩 · 40 关 · 12 结局</div>
+      <div>版本 <b>v1.0</b>　|　2026 年 11 月</div>
+      <div>文档范围：意图控制 · 架构设计 · 可复现性</div>
+    </div>
+    <div class="badge">10 分钟可复现</div>
+  </div>
+
+  <div class="foot">
+    <span>INDEX.HTML + VANILLA JS + NODE PROXY</span>
+    <span>NO BUILD · NO RUNTIME DEPENDENCIES</span>
+  </div>
+</body>
+</html>

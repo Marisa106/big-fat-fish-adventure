@@ -1,0 +1,1083 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>大肥鱼历险记 · 技术文档</title>
+<style>
+  @page { size: A4; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    font-size: 9.7pt;
+    line-height: 1.66;
+    color: #1d2c27;
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  p { margin: 0 0 2.6mm; text-align: justify; orphans: 2; widows: 2; }
+  strong { color: #0d3f35; font-weight: 700; }
+  em { color: #9a6b18; font-style: normal; font-weight: 600; }
+  code {
+    font-family: "Cascadia Mono", Consolas, "Courier New", monospace;
+    font-size: .88em;
+    background: #f1f6f2;
+    border: 1px solid #dbe8df;
+    border-radius: 2px;
+    padding: .2mm 1.1mm;
+    color: #145244;
+  }
+  a { color: #176b58; text-decoration: none; }
+
+  /* ---------- 文档信息页 ---------- */
+  .doc-info { padding: 0 0 4mm; }
+  .doc-eyebrow {
+    font-size: 8pt; letter-spacing: .28em; color: #8a6a22;
+    text-transform: uppercase; margin-bottom: 4mm;
+  }
+  .doc-title {
+    font-family: "Noto Serif SC", serif;
+    font-size: 27pt; line-height: 1.25; color: #0b332b; margin: 0 0 2mm;
+    letter-spacing: .02em;
+  }
+  .doc-sub { font-size: 12pt; color: #2f7562; letter-spacing: .1em; margin-bottom: 7mm; }
+  .doc-meta {
+    width: 100%; border-collapse: collapse; margin: 0 0 7mm;
+    font-size: 8.6pt;
+  }
+  .doc-meta th, .doc-meta td {
+    border: 1px solid #d6e4da; padding: 2.1mm 2.6mm; text-align: left; vertical-align: top;
+  }
+  .doc-meta th { background: #f3f8f4; color: #47675a; font-weight: 500; width: 23%; }
+  .abstract {
+    border-left: 3px solid #c9a24a; background: #fbf8ef;
+    padding: 4mm 5mm; margin: 0 0 6mm;
+  }
+  .abstract h3 {
+    margin: 0 0 2mm; font-size: 10pt; color: #8a6414; letter-spacing: .08em;
+  }
+  .abstract p { margin: 0; font-size: 9.4pt; line-height: 1.75; }
+  .keywords { font-size: 8.8pt; color: #47675a; margin: -2mm 0 6mm; }
+  .keywords b { color: #1d4d40; }
+  .reading-grid { display: flex; gap: 4mm; }
+  .reading-card {
+    flex: 1; border: 1px solid #dbe8df; border-radius: 2mm; padding: 3.4mm 4mm;
+    background: #fbfdfb;
+  }
+  .reading-card h4 { margin: 0 0 1.4mm; font-size: 9.2pt; color: #145244; }
+  .reading-card p { margin: 0; font-size: 8.4pt; line-height: 1.6; color: #4b655b; }
+  .evidence-strip {
+    margin-top: 6mm; display: flex; gap: 2.5mm;
+  }
+  .evidence-strip div {
+    flex: 1; text-align: center; border-top: 2px solid #2f8f7a; padding-top: 2.4mm;
+  }
+  .evidence-strip b { display: block; font-size: 15pt; color: #0d3f35; font-family: "Noto Serif SC", serif; }
+  .evidence-strip span { font-size: 7.6pt; color: #688277; letter-spacing: .04em; }
+
+  /* ---------- 目录 ---------- */
+  .toc-section { break-before: page; }
+  .toc-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1.5pt solid #0d3f35; padding-bottom: 2.4mm; margin-bottom: 6mm;
+  }
+  .toc-head h2 { margin: 0; font-family: "Noto Serif SC", serif; font-size: 19pt; color: #0b332b; }
+  .toc-head span { font-size: 8pt; letter-spacing: .22em; color: #8a6a22; }
+  .toc-row {
+    display: flex; align-items: baseline; gap: 3mm;
+    padding: 3.1mm 1mm; border-bottom: 1px dotted #cfddd4;
+  }
+  .toc-num {
+    width: 10mm; font-family: "Noto Serif SC", serif; font-size: 11pt; color: #b08a36;
+  }
+  .toc-title { flex: 1; font-size: 10.6pt; color: #173f34; }
+  .toc-title small { display: block; font-size: 7.8pt; color: #7a9187; margin-top: .6mm; letter-spacing: .02em; }
+  .toc-page { font-size: 9pt; color: #688277; min-width: 8mm; text-align: right; }
+  .toc-note {
+    margin-top: 7mm; border: 1px solid #e2e9df; background: #fafcf8; padding: 4mm 5mm;
+    font-size: 8.5pt; color: #5d756a; line-height: 1.7;
+  }
+  .toc-note b { color: #145244; }
+
+  /* ---------- 章节 ---------- */
+  .chapter { break-before: page; }
+  .ch-head {
+    display: flex; align-items: flex-start; gap: 5mm;
+    border-bottom: 1.2pt solid #cfdcd2; padding-bottom: 4mm; margin-bottom: 6mm;
+  }
+  .ch-num {
+    font-family: "Noto Serif SC", serif; font-size: 34pt; line-height: .95;
+    color: #e9dfc6; font-weight: 700; min-width: 17mm;
+  }
+  .ch-head h1 {
+    margin: 0 0 1mm; font-family: "Noto Serif SC", serif;
+    font-size: 19pt; color: #0b332b; letter-spacing: .02em;
+  }
+  .ch-head .ch-sub { font-size: 8.4pt; color: #7b9187; letter-spacing: .06em; }
+  h2 {
+    font-size: 12.2pt; color: #0d3f35; margin: 6.5mm 0 2.8mm;
+    padding-left: 3mm; border-left: 3.2px solid #c9a24a;
+    break-after: avoid;
+  }
+  h3 {
+    font-size: 10.4pt; color: #1d5c4b; margin: 4.4mm 0 2mm;
+    break-after: avoid;
+  }
+  .lead {
+    font-family: "Noto Serif SC", serif; font-size: 10.6pt; line-height: 1.8;
+    color: #2a4a3f; margin-bottom: 4mm;
+  }
+
+  /* ---------- 表格 ---------- */
+  table.data {
+    width: 100%; border-collapse: collapse; margin: 2.6mm 0 3.6mm;
+    font-size: 8.5pt; line-height: 1.5; break-inside: avoid;
+  }
+  table.data th {
+    background: #0f3d34; color: #f2f8f4; font-weight: 500; text-align: left;
+    padding: 2mm 2.2mm; border: 1px solid #0f3d34;
+  }
+  table.data td {
+    padding: 1.8mm 2.2mm; border: 1px solid #dbe7df; vertical-align: top;
+  }
+  table.data tr:nth-child(even) td { background: #f8fbf9; }
+  table.data td.c, table.data th.c { text-align: center; }
+  table.data td b { color: #0d3f35; }
+  table.data.compact td, table.data.compact th { padding: 1.4mm 2mm; font-size: 8.2pt; }
+
+  /* ---------- 提示框 ---------- */
+  .callout {
+    border: 1px solid #dbe7df; border-left: 3.5px solid #2f8f7a;
+    background: #f6fbf8; padding: 3.2mm 4.2mm; margin: 3mm 0 4mm;
+    font-size: 8.9pt; line-height: 1.7; break-inside: avoid;
+  }
+  .callout.gold { border-left-color: #c9a24a; background: #fcf9f0; }
+  .callout.red { border-left-color: #c25b4e; background: #fdf7f5; }
+  .callout h4 {
+    margin: 0 0 1.4mm; font-size: 8.8pt; letter-spacing: .04em; color: #145244;
+  }
+  .callout.gold h4 { color: #8a6414; }
+  .callout.red h4 { color: #9c4136; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* ---------- 代码 / Prompt ---------- */
+  .prompt-box, pre.code {
+    font-family: "Cascadia Mono", Consolas, "Courier New", monospace;
+    font-size: 7.7pt; line-height: 1.62;
+    background: #f6f5ef; border: 1px solid #e4dfce; border-left: 3px solid #c9a24a;
+    padding: 3.2mm 4mm; margin: 2.6mm 0 4mm;
+    white-space: pre-wrap; word-break: break-word;
+    color: #33423a; break-inside: avoid;
+  }
+  .prompt-box b { color: #7a5410; font-weight: 700; }
+  .prompt-label {
+    display: inline-block; font-family: "Noto Sans SC", sans-serif;
+    font-size: 7.2pt; letter-spacing: .12em; color: #8a6414;
+    background: #f3e8c8; padding: .6mm 2mm; border-radius: 1mm;
+    margin-bottom: 1.6mm;
+  }
+
+  /* ---------- 图 ---------- */
+  figure { margin: 3mm 0 5mm; break-inside: avoid; }
+  figure img {
+    display: block; width: 100%; height: auto; border: 1px solid #d7e2da;
+    border-radius: 1.4mm;
+  }
+  figcaption {
+    margin-top: 1.6mm; font-size: 7.8pt; color: #6d857a; line-height: 1.55;
+  }
+  .fig-row { display: flex; gap: 3mm; align-items: stretch; }
+  .fig-row figure { flex: 1; margin: 0; }
+  .fig-row img { height: auto; }
+  .arch { margin: 2mm 0 4mm; break-inside: avoid; }
+  .arch svg { width: 100%; height: auto; display: block; }
+
+  /* ---------- KPI ---------- */
+  .kpi-grid { display: flex; gap: 3mm; margin: 3mm 0 4mm; break-inside: avoid; }
+  .kpi {
+    flex: 1; border: 1px solid #dbe7df; border-top: 2.5px solid #2f8f7a;
+    background: #fbfdfb; padding: 3mm 3.4mm;
+  }
+  .kpi b { display: block; font-family: "Noto Serif SC", serif; font-size: 16pt; color: #0b332b; line-height: 1.2; }
+  .kpi span { display: block; margin-top: 1mm; font-size: 7.6pt; color: #6d857a; line-height: 1.5; }
+
+  /* ---------- 流程条 ---------- */
+  .flow { display: flex; align-items: stretch; gap: 1.4mm; margin: 3mm 0 4mm; break-inside: avoid; }
+  .flow .step {
+    flex: 1; border: 1px solid #d7e4db; background: #f9fcfa; padding: 2.6mm 2.4mm;
+    font-size: 7.9pt; line-height: 1.5; color: #49665a; position: relative;
+  }
+  .flow .step b { display: block; color: #0d3f35; font-size: 8.6pt; margin-bottom: .8mm; }
+  .flow .arrow {
+    align-self: center; color: #b08a36; font-size: 10pt; font-weight: 700;
+  }
+  .two-col { display: flex; gap: 5mm; }
+  .two-col > div { flex: 1; }
+  .two-col p { text-align: left; }
+  .two-col h3 { margin-top: 0; }
+
+  .chapter-end {
+    margin-top: 5mm; padding-top: 2.5mm; border-top: 1px solid #e1e9e3;
+    font-size: 7.6pt; color: #8a9c93; letter-spacing: .08em;
+  }
+  .appendix .ch-num { color: #e6e9e4; }
+  .small { font-size: 8.2pt; color: #61786d; }
+  .nowrap { white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<!-- ================= 文档信息 ================= -->
+<section class="doc-info">
+  <div class="doc-eyebrow">Competition Technical Report · 2026</div>
+  <h1 class="doc-title">大肥鱼历险记 · 技术文档</h1>
+  <div class="doc-sub">DeepSeek 认知冒险 —— 意图控制、架构设计与可复现性</div>
+
+  <table class="doc-meta">
+    <tr><th>作品名称</th><td>大肥鱼历险记 · DeepSeek 认知冒险</td><th>作品类型</th><td>单机回合制棋盘 + AI 素养科普游戏</td></tr>
+    <tr><th>技术形态</th><td>纯前端（HTML / CSS / 原生 JavaScript）+ 零依赖 Node 代理</td><th>运行方式</th><td>双击 index.html 离线运行；<code>npm start</code> 接入 DeepSeek</td></tr>
+    <tr><th>文档版本</th><td>v1.0（比赛提交版）</td><th>代码版本</th><td>package.json v1.0.0</td></tr>
+    <tr><th>文档范围</th><td>意图控制策略 · 架构设计 · 可复现性论证</td><th>页数上限</th><td>27 页（含封面）</td></tr>
+  </table>
+
+  <div class="abstract">
+    <h3>摘要</h3>
+    <p>《大肥鱼历险记》把「大学生如何正确使用 AI」拆成 40 关可玩的认知冒险：玩家扮演 DeepSeek 化身的蓝色小鲸鱼，在 AI 认知森林里击败九类「误解怪物」，处理十个 AI 使用病例，最终在十二种结局中走向属于自己的答案。项目刻意选择零依赖、无构建、双击即玩的形态，把比赛现场的环境风险压到最低；同时用分层架构、事件协议与种子随机，把「AI 生成的代码」约束成可测试、可复现、可解释的工程系统。本文重点回答三个问题：我如何用上下文与 Prompt 控制 AI 的意图；AI 生成的代码采用了什么架构、我如何约束它；以及为什么这份作品可以被另一台干净电脑在十分钟内复现。</p>
+  </div>
+
+  <div class="keywords"><b>关键词：</b>意图控制 · Prompt 工程 · 零依赖架构 · 事件驱动 · 种子随机 · 可复现性 · AI 素养教育</div>
+
+  <div class="reading-grid">
+    <div class="reading-card">
+      <h4>评委快速路径</h4>
+      <p>先读第 1 章与第 7 章，按「60 秒验收脚本」打开游戏；再读第 3、4、5 章核对工程能力。</p>
+    </div>
+    <div class="reading-card">
+      <h4>工程复现路径</h4>
+      <p>直接看第 2 章与附录 A；完整命令、环境变量、故障排查见独立文档《10 分钟极速复现指南》。</p>
+    </div>
+    <div class="reading-card">
+      <h4>AI 协作路径</h4>
+      <p>第 3、6 章给出 Prompt 结构、三次迭代的完整链路；完整 Prompt 原文见《AI 交互 Prompt 链》。</p>
+    </div>
+  </div>
+
+  <div class="evidence-strip">
+    <div><b>119</b><span>单元 / 集成测试</span></div>
+    <div><b>25</b><span>真实视口截图</span></div>
+    <div><b>6</b><span>组 UI E2E</span></div>
+    <div><b>40</b><span>关固定战役</span></div>
+    <div><b>12</b><span>结局与 CG</span></div>
+    <div><b>0</b><span>运行时依赖</span></div>
+  </div>
+</section>
+
+<!-- ================= 目录 ================= -->
+<section class="toc-section">
+  <div class="toc-head">
+    <h2>目录</h2>
+    <span>CONTENTS</span>
+  </div>
+
+  <div class="toc-row"><span class="toc-num">01</span><span class="toc-title">项目与赛事定位<small>作品是什么、为谁而做、验收口径是什么</small></span><span class="toc-page" data-ref="ch1">3</span></div>
+  <div class="toc-row"><span class="toc-num">02</span><span class="toc-title">十分钟极速复现<small>依赖清单、环境变量、三条启动路径与时间盒</small></span><span class="toc-page" data-ref="ch2">5</span></div>
+  <div class="toc-row"><span class="toc-num">03</span><span class="toc-title">意图控制策略<small>如何设计上下文与 Prompt，让 AI 不跑偏</small></span><span class="toc-page" data-ref="ch3">7</span></div>
+  <div class="toc-row"><span class="toc-num">04</span><span class="toc-title">架构设计与约束<small>AI 生成的代码采用了什么架构，我如何约束它</small></span><span class="toc-page" data-ref="ch4">11</span></div>
+  <div class="toc-row"><span class="toc-num">05</span><span class="toc-title">可复现性论证<small>环境、随机、内容、验收四个维度的证据</small></span><span class="toc-page" data-ref="ch5">15</span></div>
+  <div class="toc-row"><span class="toc-num">06</span><span class="toc-title">三次核心迭代的 Prompt 链<small>目标卡 → 约束卡 → 复述卡 → 实施卡 → 回归卡</small></span><span class="toc-page" data-ref="ch6">18</span></div>
+  <div class="toc-row"><span class="toc-num">07</span><span class="toc-title">开发者模式与验收路径<small>一键解锁 12 结局 CG，以及它的安全边界</small></span><span class="toc-page" data-ref="ch7">21</span></div>
+  <div class="toc-row"><span class="toc-num">08</span><span class="toc-title">边界、风险与结论<small>哪些能保证、哪些不能保证、为什么仍然值得</small></span><span class="toc-page" data-ref="ch8">24</span></div>
+  <div class="toc-row"><span class="toc-num">A</span><span class="toc-title">附录：命令、变量与文件地图<small>一页纸速查</small></span><span class="toc-page" data-ref="appA">25</span></div>
+
+  <div class="toc-note">
+    <b>阅读约定：</b>目录页码从正文第 1 页起算（封面不计入），与页脚一致；本文中的「可复现」指同一份代码与素材在另一台干净电脑上得到一致的可观察行为与一致的自动化验收结果；AI 点评属于外部服务，其自然语言内容不承诺逐字一致，但评分契约、回退路径与结局判定是确定性的。所有命令默认在项目根目录执行。
+  </div>
+</section>
+
+<!-- ================= 第 1 章 ================= -->
+<section class="chapter" id="ch1">
+  <div class="ch-head">
+    <div class="ch-num">01</div>
+    <div>
+      <h1>项目与赛事定位</h1>
+      <div class="ch-sub">WHAT WE BUILT &amp; HOW IT IS JUDGED</div>
+    </div>
+  </div>
+
+  <p class="lead">这不是一款「把 AI 名词贴到怪物身上」的换皮游戏。它把 AI 素养教育里最难讲清楚的三件事——幻觉、验证、依赖——做成了玩家必须亲自做出的选择，并让选择产生可见的后果。</p>
+
+  <h2>1.1 作品定位：把 AI 素养变成可玩的决策</h2>
+  <p>游戏的主角是一条蓝色小鲸鱼——DeepSeek 的化身。它掉进「AI 认知森林」，这里的怪物不是恶魔，而是人们对 AI 的误解：没说清楚的提示词、训练数据里的噪声、只会背答案的过拟合、一本正经编造事实的幻觉、过期缓存、隐私泄露、堆算力、提示词注入、以及被 Token 喂养的饭团。玩家要做的不是「杀光」，而是在战斗、病例诊疗与对话中逐步建立对 AI 的正确理解。</p>
+  <p>因此，作品的设计目标被刻意写成三条可检验的原则：</p>
+  <table class="data">
+    <tr><th style="width:20%">设计原则</th><th style="width:38%">游戏中的实现</th><th>为什么这样做</th></tr>
+    <tr><td><b>认知冲突</b></td><td>九类怪物对应九种真实误解；Boss 是「背题」「幻觉」「信息过载」「算力与 Token」。</td><td>先让玩家感到「这说的就是我」，再谈知识。</td></tr>
+    <tr><td><b>决策后果</b></td><td>10 个三步病例、3 场 Boss 对话 + 1 场终局对话、9 个终局选项，共同写入七维认知档案。</td><td>素养不是选择题分数，而是反复决策后的倾向。</td></tr>
+    <tr><td><b>可解释反馈</b></td><td>病例反馈给出诊断/检查/处方三段得分；结局页展示七维雷达与平均分。</td><td>让玩家知道「为什么是这个结局」，而不是抽奖。</td></tr>
+  </table>
+
+  <h2>1.2 一局游戏发生了什么</h2>
+  <p>一局标准流程是 40 个回合：每回合开始刷新怪物、回满体力、重置技能冷却；玩家每次只能移动一格，移动与普通攻击各消耗 1 点体力，主动技能不消耗体力；玩家每次行动后，怪物沿 BFS 最短路逼近，每两次反应攻击一次；清空当前回合全部怪物后自动进入结算，玩家可以升级武器、逛商店、领取每 5 关的技能奖励，然后进入下一关。第 4、8、12……40 关插入 AI 误解病例；第 10、20、30 关是 Boss，击败后可对话；第 40 关击败终焉电饭煲、拾取传送符文后进入终局对话，由「最终选择 + 七维档案」判定 12 种结局之一。</p>
+
+  <div class="flow">
+    <div class="step"><b>战斗</b>移动 / 攻击 / 技能 / 休息<br>怪物追击与 Boss 控制</div>
+    <div class="arrow">→</div>
+    <div class="step"><b>病例</b>诊断 → 检查 → 处方<br>本地评分或 DeepSeek 点评</div>
+    <div class="arrow">→</div>
+    <div class="step"><b>结算</b>武器 / 商店 / 技能<br>进入下一关</div>
+    <div class="arrow">→</div>
+    <div class="step"><b>终局</b>Boss 对话 / 符文<br>12 结局与 CG</div>
+  </div>
+
+  <div class="fig-row">
+    <figure>
+      <img src="../artifacts/shots/01-title.png" alt="标题页">
+      <figcaption>标题页：结局图鉴、API 设置、开发者模式都在首屏；离线时状态明确显示「离线本地评分」。</figcaption>
+    </figure>
+    <figure>
+      <img src="../artifacts/shots/05-case.png" alt="AI 误解病例">
+      <figcaption>病例诊疗：先诊断、再检查、最后开处方；结论写入七维认知档案。</figcaption>
+    </figure>
+  </div>
+
+  <h2>1.3 交付物与验收口径</h2>
+  <table class="data">
+    <tr><th style="width:26%">交付物</th><th>内容</th><th style="width:27%">验收方式</th></tr>
+    <tr><td><b>可运行游戏</b></td><td>index.html + 24 个 JS 模块 + 65 个素材文件，双击即玩</td><td>第 2 章三条路径；第 7 章 60 秒脚本</td></tr>
+    <tr><td><b>10 分钟复现指南</b></td><td>依赖清单、环境变量模板、时间盒、故障排查</td><td>另一台干净电脑按文档执行</td></tr>
+    <tr><td><b>Prompt 链</b></td><td>三次核心迭代的完整提示、AI 建议、Bug 诊断与修复</td><td>第 6 章摘要；独立文档全文</td></tr>
+    <tr><td><b>技术文档</b></td><td>意图控制、架构、可复现性（本文）</td><td>页数 ≤ 30；论证可核对</td></tr>
+    <tr><td><b>开发者模式</b></td><td>标题页按钮 + 二次确认 + 一键解锁 12 结局 CG</td><td>第 7 章；E2E 已验证取消不写入</td></tr>
+  </table>
+
+  <div class="callout gold">
+    <h4>本文的证据口径</h4>
+    <p>文中所有「已通过」「已覆盖」均对应仓库中的可执行命令：<code>npm test</code>（119 个测试）、<code>npm run sim</code>（200 局种子模拟）、<code>npm run screens</code>（25 张截图 + 6 组 E2E + 运行时错误捕获）。不把「设计意图」写成「已验证结果」；未验证的部分会在第 8 章明确标出。</p>
+  </div>
+
+  <h2>1.4 比赛要求与本文对应</h2>
+  <table class="data compact">
+    <tr><th style="width:31%">比赛要求</th><th style="width:40%">本项目的回应</th><th>对应位置</th></tr>
+    <tr><td>用于比赛现场</td><td>零依赖、双击即玩；离线也能完整通关与解锁 12 结局</td><td>第 2 章 / 第 7 章</td></tr>
+    <tr><td>10 分钟极速复现</td><td>依赖清单、环境变量模板、时间盒、故障排查</td><td>第 2 章 + 独立复现指南</td></tr>
+    <tr><td>≥3 条完整 Prompt 链</td><td>40 关体力追击、病例与 12 结局、精灵动画管线</td><td>第 6 章 + 独立 Prompt 文档</td></tr>
+    <tr><td>提供有效 Prompt</td><td>需求冻结、架构守门、根因诊断、最小修复、验收证据、复现文档</td><td>Prompt 文档第 4 节</td></tr>
+    <tr><td>技术文档 ≤ 30 页</td><td>意图控制、架构设计、可复现性三章为重点；全文 27 页（含封面）</td><td>本文</td></tr>
+    <tr><td>开发者模式</td><td>标题页按钮 + 二次确认 + 一键解锁 12 结局 CG</td><td>第 7 章</td></tr>
+  </table>
+</section>
+
+<!-- ================= 第 2 章 ================= -->
+<section class="chapter" id="ch2">
+  <div class="ch-head">
+    <div class="ch-num">02</div>
+    <div>
+      <h1>十分钟极速复现</h1>
+      <div class="ch-sub">DEPENDENCIES · ENVIRONMENT · TIMEBOX</div>
+    </div>
+  </div>
+
+  <p class="lead">复现的敌人不是代码，而是环境。这个项目用「零运行时依赖 + 无构建 + 素材随包」把环境熵压到最低：评委机器只需要一个浏览器；要跑自动化再加 Node 18+；Python 与 ffmpeg 只在重建美术素材时才需要。</p>
+
+  <h2>2.1 依赖清单：必需、可选、仅重建素材</h2>
+  <table class="data">
+    <tr><th style="width:17%">层级</th><th style="width:27%">依赖</th><th>用途与不装的后果</th></tr>
+    <tr><td><b>必需</b></td><td>Chrome / Edge（较新版本）</td><td>运行游戏。支持 ES2020、CSS Grid、WebP、WebAudio、H.264。旧浏览器可能无法播放结局成片。</td></tr>
+    <tr><td><b>可选</b></td><td>Node.js 18+ / npm</td><td>本地静态服务器 + DeepSeek 代理、单元测试、平衡模拟、截图 E2E。不装只能双击玩离线模式。</td></tr>
+    <tr><td><b>可选</b></td><td>Chrome / Edge</td><td><code>npm run screens</code> 的真实视口截图与 E2E；不影响游戏本身。</td></tr>
+    <tr><td><b>仅重建素材</b></td><td>Python 3.10+、Pillow、numpy、ffmpeg</td><td>从原始立绘/视频重新生成图集与成片。普通复现完全不需要。</td></tr>
+  </table>
+  <p>项目没有 <code>dependencies</code> / <code>devDependencies</code>，因此不存在 <code>node_modules</code>，也不需要 <code>npm install</code>。本地代理只使用 Node 内置模块；测试只使用 <code>node:test</code> 与 <code>node:assert</code>。</p>
+
+  <h2>2.2 三条启动路径</h2>
+  <table class="data">
+    <tr><th style="width:13%">路径</th><th style="width:30%">命令</th><th>适用场景与边界</th></tr>
+    <tr><td><b>A 离线</b></td><td><code>双击 index.html</code></td><td>最稳、最快。12 结局全部可解锁，病例使用本地评分。无网络依赖。</td></tr>
+    <tr><td><b>B 代理</b></td><td><code>Copy-Item .env.example .env</code><br><code>npm start</code></td><td>推荐。Key 只留在服务器进程环境；游戏内选「本地代理」，地址 <code>/api/chat</code>。</td></tr>
+    <tr><td><b>C 直连</b></td><td>游戏内「API 设置」→ 直连</td><td>仅调试。Key 存 localStorage，可能被 CORS 拦截；失败自动回退本地评分。</td></tr>
+  </table>
+
+  <div class="callout">
+    <h4>为什么推荐本地代理，而不是浏览器直连</h4>
+    <p>直连把 Key 暴露在 <code>localStorage</code>（键名 <code>bq.ai.settings</code>），且浏览器跨域策略不可控；本地代理把 Key 留在 Node 进程，浏览器只访问同源 <code>/api/chat</code>，同时统一了 30 秒超时、错误消息与 CORS 头。代理无 Key 时返回 503，游戏会自动回退，不会中断关卡。</p>
+  </div>
+
+  <h2>2.3 环境变量模板</h2>
+  <p>仓库根目录提供 <code>.env.example</code>；复制为 <code>.env</code> 后填写即可。服务启动时自动读取，<b>已存在的进程环境变量优先于 <code>.env</code></b>。</p>
+  <div class="prompt-box">DEEPSEEK_API_KEY=          <span style="color:#8a6a22"># 必填（仅代理模式）；留空则离线</span>
+DEEPSEEK_MODEL=deepseek-chat
+DEEPSEEK_BASE_URL=https://api.deepseek.com
+PORT=8123</div>
+  <table class="data compact">
+    <tr><th>变量</th><th>必填</th><th>默认</th><th>敏感</th><th>说明</th></tr>
+    <tr><td><code>DEEPSEEK_API_KEY</code></td><td>仅代理</td><td>空</td><td>是</td><td>只在服务器进程或本机 .env；不进入浏览器</td></tr>
+    <tr><td><code>DEEPSEEK_MODEL</code></td><td>否</td><td>deepseek-chat</td><td>否</td><td>游戏内设置可覆盖</td></tr>
+    <tr><td><code>DEEPSEEK_BASE_URL</code></td><td>否</td><td>api.deepseek.com</td><td>否</td><td>代理拼接 /chat/completions</td></tr>
+    <tr><td><code>PORT</code></td><td>否</td><td>8123</td><td>否</td><td>被占用时修改</td></tr>
+  </table>
+  <p>三种注入方式：PowerShell 当前窗口 <code>$env:DEEPSEEK_API_KEY="sk-..."</code>；CMD <code>set DEEPSEEK_API_KEY=...</code>；或 <code>.env</code> 文件（推荐，重启仍有效，已加入 <code>.gitignore</code>）。</p>
+
+  <h2>2.4 十分钟时间盒</h2>
+  <table class="data compact">
+    <tr><th style="width:14%">时间</th><th style="width:40%">动作</th><th>通过标准</th></tr>
+    <tr><td>0:00–1:00</td><td>解压，确认 index.html、js/、assets/、tools/ 完整</td><td>65 个素材文件、约 58 MB</td></tr>
+    <tr><td>1:00–2:00</td><td>双击 index.html，看标题页</td><td>图鉴 0/12、AI 状态、开发者模式按钮</td></tr>
+    <tr><td>2:00–4:00</td><td>开始 → 选职业 → 移动/攻击/休息 → 清怪结算</td><td>体力、追击、自动结算正常</td></tr>
+    <tr><td>4:00–5:00</td><td>开发者模式 → 确认 → 图鉴 12/12 → 点开 CG</td><td>二次确认；取消不写入；可重播</td></tr>
+    <tr><td>5:00–7:00</td><td>.env + npm start + /api/health + 游戏内测试</td><td>hasKey:true，标题页显示「本地代理」</td></tr>
+    <tr><td>7:00–8:00</td><td>第 4 关病例，提交处方</td><td>AI 点评或本地评分兜底，不卡关</td></tr>
+    <tr><td>8:00–10:00</td><td>记录版本、端口、截图、异常</td><td>形成一页复现记录</td></tr>
+  </table>
+
+  <h2>2.5 自动化验证命令与预期结果</h2>
+  <table class="data compact">
+    <tr><th style="width:27%">命令</th><th style="width:24%">预期</th><th>说明</th></tr>
+    <tr><td><code>npm test</code></td><td>119 pass / 0 fail</td><td>单元 + 集成；约 1 秒</td></tr>
+    <tr><td><code>npm run sim</code></td><td>战士 23.5% / 法师 18.5%</td><td>200 局、seed 1 起；几秒</td></tr>
+    <tr><td><code>npm run screens</code></td><td>25 张截图 + 6 组 E2E / 0 运行时错误</td><td>需要 Chrome/Edge；约 3–5 分钟</td></tr>
+    <tr><td><code>GET /api/health</code></td><td><code>{ ok:true, hasKey:… }</code></td><td>代理存活与 Key 状态</td></tr>
+  </table>
+
+  <div class="callout red">
+    <h4>三条不要做的事</h4>
+    <p><b>不要在 <code>file://</code> 下测 API</b>——没有同源后端，<code>/api/chat</code> 必然 404；<b>不要 <code>npm install</code></b>——没有依赖，装了也不会改变行为；<b>不要把真实 Key 写进截图或文档</b>——录屏前确认标题页只显示模式，不显示 Key。</p>
+  </div>
+
+  <p class="small">完整的逐项命令、故障排查表、复现记录模板见独立文档 <b>《10 分钟极速复现指南》</b>；本文只保留论证所需的最小信息。</p>
+</section>
+
+<!-- ================= 第 3 章 ================= -->
+<section class="chapter" id="ch3">
+  <div class="ch-head">
+    <div class="ch-num">03</div>
+    <div>
+      <h1>意图控制策略</h1>
+      <div class="ch-sub">HOW CONTEXT &amp; PROMPTS KEEP AI ON TARGET</div>
+    </div>
+  </div>
+
+  <p class="lead">AI 代码生成的核心风险不是「写不出来」，而是「写偏了还看起来很对」。意图控制的目标，是把「我想要什么」从一段自然语言，变成一组 AI 无法绕开的约束与可执行的验收证据。</p>
+
+  <h2>3.1 三种漂移：AI 是怎么跑偏的</h2>
+  <table class="data">
+    <tr><th style="width:16%">漂移类型</th><th style="width:34%">典型表现</th><th>本项目中的真实例子</th></tr>
+    <tr><td><b>范围漂移</b></td><td>让它修移动，它顺手重写战斗、加新玩法、改数值。</td><td>重构 40 关时，AI 提出「击杀后补刷怪物」——直接破坏「清空怪物自动结算」的目标。</td></tr>
+    <tr><td><b>架构漂移</b></td><td>引入框架、ES Module、后端、数据库、第三方库。</td><td>AI 第一版方案要拆 ES Module、引入 <code>pathfinding</code> 库；与「双击即玩、零依赖」冲突。</td></tr>
+    <tr><td><b>验收漂移</b></td><td>说「已完成」，但没有测试、没有截图，旧功能回归。</td><td>单元测试全绿，但标题页 API/图鉴按钮失效、正常开局不刷怪——测试没覆盖 UI 编排。</td></tr>
+  </table>
+  <p>三种漂移的共同根源是：AI 只看到了「局部目标」，没有看到「项目宪法」与「验收代价」。因此我没有试图用更长的自然语言去「说服」它，而是把意图拆成四层上下文与五道闸门。</p>
+
+  <h2>3.2 控制回路：五道闸门</h2>
+  <div class="flow">
+    <div class="step"><b>① 目标卡</b>行为 + 非目标<br>可观察的验收</div>
+    <div class="arrow">→</div>
+    <div class="step"><b>② 约束卡</b>架构不变量<br>文件白名单</div>
+    <div class="arrow">→</div>
+    <div class="step"><b>③ 复述卡</b>AI 复述约束<br>给计划，不写码</div>
+    <div class="arrow">→</div>
+    <div class="step"><b>④ 实施卡</b>最小改动<br>每步自测</div>
+    <div class="arrow">→</div>
+    <div class="step"><b>⑤ 回归卡</b>证据 + 全量测试<br>旧功能抽查</div>
+  </div>
+  <p>每道闸门都有「拒绝权」：目标不清楚就退回重写目标；约束被违反就退回方案；复述不一致就不允许编码；实施超范围就回滚；证据不足就不接受「完成」。这套回路看起来比「一句话让 AI 写完」慢，但它把返工从「写完再发现」提前到「写前就暴露」。</p>
+
+  <div class="callout gold">
+    <h4>最重要的一条：先复述，再动手</h4>
+    <p>每次核心迭代，我都会要求 AI 先用自己的话复述约束、列出改动文件与风险点，并明确「等我确认后再写代码」。这一步成本很低，却能抓出大部分理解偏差——尤其是「删除」被理解成「改名」、「只改 core」被理解成「顺便重写 UI」。</p>
+  </div>
+
+  <h2>3.3 上下文分层：只给 AI 需要改变的那部分世界</h2>
+  <p>把所有代码一次性塞给模型，既贵又容易让它「看到什么改什么」。我把上下文分成四层，按任务按需加载：</p>
+  <table class="data">
+    <tr><th style="width:12%">层级</th><th style="width:26%">内容</th><th style="width:14%">规模</th><th>加载时机</th></tr>
+    <tr><td><b>L0 项目宪法</b></td><td>零依赖、双击即玩、UMD、core 无 DOM、中文、40 关、12 结局、离线可通关</td><td>300–500 字</td><td>每次会话必带；放在 Prompt 最前</td></tr>
+    <tr><td><b>L1 领域模型</b></td><td>state 字段、phase 状态机、<code>{ok, events}</code> 协议、七维 axes、结局判定表</td><td>1–2 页</td><td>涉及玩法/结局/病例时必带</td></tr>
+    <tr><td><b>L2 任务卡</b></td><td>本次目标、非目标、允许改的文件、验收命令</td><td>500–800 字</td><td>每次任务一张，任务结束即废弃</td></tr>
+    <tr><td><b>L3 代码证据</b></td><td>相关文件的真实片段、测试输出、截图、行号</td><td>100–300 行</td><td>只给要改的函数与调用方，不给整仓库</td></tr>
+  </table>
+  <p>这四层对应一个简单原则：<b>上下文不是越多越好，而是越「相关且不可否认」越好</b>。L0 与 L1 是稳定事实，L2 是本次意图，L3 是证据。AI 可以质疑 L2 的实现方式，但不能修改 L0/L1 的事实；如果它认为 L0 需要变，必须先说明理由并等待确认。</p>
+
+  <h2>3.4 Prompt 的七段式结构</h2>
+  <p>我最终稳定下来的模板是七段。它不是「咒语」，而是把工程沟通中容易遗漏的部分固定下来：</p>
+  <div class="prompt-box"><b>① 角色与项目</b>   你是谁、在什么项目里、服务谁（一句话）
+<b>② 现状</b>         现在怎么实现、相关文件与函数（只给事实）
+<b>③ 目标</b>         3–6 条可观察的行为，不写「更好玩」这类形容词
+<b>④ 非目标</b>       明确不做什么（防止顺手扩展）
+<b>⑤ 不变量</b>       零依赖 / core 无 DOM / 事件协议 / 种子随机 / 稳定 id
+<b>⑥ 验收</b>         可执行命令 + 页面路径 + 预期输出
+<b>⑦ 输出与停止</b>   先复述 + 计划；超范围、需新依赖、需改 schema 时停下来问</div>
+  <p>其中「非目标」和「停止条件」是最容易被忽略、却最能限制漂移的两段。前者告诉 AI 边界在哪里，后者告诉 AI 什么时候必须停下来，而不是「先做了再说」。</p>
+
+  <h2>3.5 把意图写成不变量</h2>
+  <p>抽象原则对模型约束力弱，具体的不变量才有约束力。以下 10 条在本项目里被反复引用，也直接对应代码与测试：</p>
+  <table class="data compact">
+    <tr><th style="width:6%">#</th><th style="width:34%">不变量</th><th>落地方式</th></tr>
+    <tr><td>1</td><td>运行时零依赖、无构建</td><td>package.json 无依赖；script 标签顺序固定；<code>file://</code> 可运行</td></tr>
+    <tr><td>2</td><td>core 层不出现 DOM / window</td><td>除 <code>ai.js</code> 的 localStorage 适配外，core 可在 Node 直接 require</td></tr>
+    <tr><td>3</td><td>UI 不直接修改 state</td><td>所有变更经 <code>Progression</code>；UI 只读 state 与消费 events</td></tr>
+    <tr><td>4</td><td>动作统一返回 <code>{ok, reason, events}</code></td><td>main 只按 ok/reason/events 分支，不在 UI 复制规则</td></tr>
+    <tr><td>5</td><td>数值只在 config.js</td><td>关卡、怪物、武器、技能、商店、AI 默认值集中</td></tr>
+    <tr><td>6</td><td>内容与逻辑分离</td><td>10 个病例在 questions.js；12 结局在 endings.js</td></tr>
+    <tr><td>7</td><td>玩法随机只走 <code>state.rng</code></td><td>mulberry32 + 种子；UI 装饰随机不进入状态</td></tr>
+    <tr><td>8</td><td>离线必须完整可通关</td><td>AI 失败回退本地评分；12 结局不依赖 API</td></tr>
+    <tr><td>9</td><td>稳定标识</td><td>按钮 id、localStorage key、URL 参数一旦发布不随意改名</td></tr>
+    <tr><td>10</td><td>每次改动必须可回归</td><td>新增行为有测试；旧行为有 E2E 或截图</td></tr>
+  </table>
+
+  <h2>3.6 三个反例：模糊 Prompt 如何把 AI 带偏</h2>
+
+  <h3>反例一：「把游戏做得更好玩」</h3>
+  <p><b>AI 的行为：</b>加新怪物、加抽卡、加每日任务、改数值——每一项都「更丰富」，但会破坏 40 关节奏、增加未测试内容，并让比赛现场不可控。<b>改法：</b>把「更好玩」换成可观察目标，例如「第 1 关 2 只怪、第 33 关 6 只怪、清空后自动结算、体力不足时休息 +3」。</p>
+
+  <h3>反例二：「用最好的架构」</h3>
+  <p><b>AI 的行为：</b>推荐 React + Vite + TypeScript + Zustand，理由是「可维护」。这在普通项目里可能是对的，但会让「双击 index.html」失效，并引入构建与依赖风险。<b>改法：</b>把架构写成硬约束与权衡：「零依赖、无构建、UMD、core 可 Node 测试；如果必须引入工具，先说明它解决什么、代价是什么、如何保持 file:// 可运行，再等我确认」。</p>
+
+  <h3>反例三：「移动有 bug，修一下」</h3>
+  <p><b>AI 的行为：</b>直接重写 <code>main.js</code> 与 <code>progression.js</code>，顺手改 HUD，结果旧按钮又坏了。<b>改法：</b>先禁止改代码，要求列根因假设与验证方法；确认根因后再给文件白名单与最小修复；最后要求全量回归与 E2E 证据。</p>
+
+  <div class="callout red">
+    <h4>一个判断标准</h4>
+    <p>如果一条 Prompt 无法回答「做完后我用什么命令、看哪个页面、看到什么现象来判定成功」，那它还不是工程任务，只是愿望。先把愿望翻译成验收，再交给 AI。</p>
+  </div>
+
+  <h2>3.7 对齐检查与停止条件</h2>
+  <p>在 AI 复述之后、编码之前，我会做一次 30 秒对齐检查：它列出的文件是否在允许范围内？是否遗漏了「非目标」？是否把「删除」写成了「保留但隐藏」？是否计划新增依赖或修改数据结构？只要有一项不对，就退回重写，而不是「先让它写写看」。</p>
+  <p>停止条件同样重要。我明确要求 AI 在以下情况停下来询问，而不是自行决定：需要新增运行时依赖；需要改 <code>state</code> 字段或事件协议；需要删除/跳过测试；需要改按钮 id、localStorage key 或 URL 参数；改动文件超过白名单；无法复现我给的 Bug。这条规则避免了「AI 为了交差而改测试」这类最危险的行为。</p>
+
+  <h2>3.8 效果：可核对的变化</h2>
+  <table class="data compact">
+    <tr><th style="width:34%">观察项</th><th>结果</th></tr>
+    <tr><td>运行时依赖</td><td>0；无 <code>node_modules</code>、无构建步骤</td></tr>
+    <tr><td>三次核心迭代</td><td>40 关体力追击、病例与 12 结局、精灵动画管线</td></tr>
+    <tr><td>用户可见回归</td><td>3 个（API 设置、结局图鉴、正常开局不刷怪），均已修复并纳入 E2E</td></tr>
+    <tr><td>测试规模</td><td>119 个测试，覆盖 core 规则、素材清单、结局可达性、集成流程</td></tr>
+    <tr><td>视觉验收</td><td>25 张真实视口截图；6 组 E2E；运行时错误 0</td></tr>
+  </table>
+  <p>这些数字不能证明「Prompt 一定有效」，但能证明这套控制回路产出了一个可运行、可测试、可复现的系统，而不是一堆看起来合理的代码。</p>
+</section>
+
+<!-- ================= 第 4 章 ================= -->
+<section class="chapter" id="ch4">
+  <div class="ch-head">
+    <div class="ch-num">04</div>
+    <div>
+      <h1>架构设计与约束</h1>
+      <div class="ch-sub">WHAT ARCHITECTURE AI PRODUCED &amp; HOW IT IS CONSTRAINED</div>
+    </div>
+  </div>
+
+  <p class="lead">这套架构不是「AI 自由发挥」的结果，而是被约束出来的：先定边界，再让 AI 在边界内实现。它的核心只有一句话——<b>规则在 core，表现 在 ui，编排在 main，适配在边界</b>。</p>
+
+  <h2>4.1 分层总览</h2>
+  <div class="arch">
+    <svg viewBox="0 0 980 610" xmlns="http://www.w3.org/2000/svg" font-family="Noto Sans SC, Microsoft YaHei, sans-serif">
+      <defs>
+        <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 z" fill="#7d9188"/>
+        </marker>
+        <marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 z" fill="#b08a36"/>
+        </marker>
+      </defs>
+
+      <rect x="8" y="8" width="700" height="594" rx="14" fill="#f8fbf9" stroke="#b9d2c3" stroke-width="1.4" stroke-dasharray="7 5"/>
+      <text x="26" y="34" font-size="15" fill="#47675a" font-weight="600">浏览器（file:// 或 http://127.0.0.1:8123）</text>
+
+      <rect x="28" y="48" width="660" height="58" rx="8" fill="#eef5f1" stroke="#c3d8ca"/>
+      <text x="42" y="72" font-size="15" fill="#0d3f35" font-weight="700">外壳层</text>
+      <text x="42" y="92" font-size="12.5" fill="#5d756a">index.html（固定 script 顺序）＋ css/style.css（主题 / 棋盘 / 响应式）</text>
+
+      <rect x="28" y="120" width="660" height="112" rx="8" fill="#f2f8fc" stroke="#c4d9e5"/>
+      <text x="42" y="144" font-size="15" fill="#14506b" font-weight="700">表现层 js/ui/</text>
+      <text x="42" y="166" font-size="12" fill="#4f6d7b">render / hud / modals / endings / cinematics / sprite / audio / bgm / input / dom</text>
+      <text x="42" y="188" font-size="11.5" fill="#6d8794">只读 state；把 events 翻译成 DOM、动画、音效；不写玩法规则</text>
+      <text x="42" y="210" font-size="11.5" fill="#9c4136">边界：不改 state、不派发规则、不直接调用 Combat / Monsters</text>
+
+      <rect x="28" y="246" width="660" height="66" rx="8" fill="#fdf7e8" stroke="#e6d3a8"/>
+      <text x="42" y="270" font-size="15" fill="#7a5410" font-weight="700">编排层 js/main.js</text>
+      <text x="42" y="292" font-size="12" fill="#6d5a33">界面状态机：标题 → 剧情 → 选职业 → 战斗 → 病例 → 结算 → 终局；动作编排、弹窗流程、错误 toast</text>
+
+      <rect x="28" y="326" width="660" height="154" rx="8" fill="#eef7f2" stroke="#b7d2c1"/>
+      <text x="42" y="350" font-size="15" fill="#0d3f35" font-weight="700">规则层 js/core/</text>
+      <text x="42" y="373" font-size="12" fill="#4f6d5d">config · rng · grid · stats · combat · skills · questions · endings · shop · state · monsters · progression</text>
+      <text x="42" y="395" font-size="11.5" fill="#6d857a">纯数据 + 纯函数 / 状态变更；不触 DOM；可在 Node 直接 require 测试</text>
+      <text x="42" y="417" font-size="11.5" fill="#6d857a">动作返回 { ok, reason, events }；随机只走 state.rng；数值只在 config.js</text>
+      <text x="42" y="445" font-size="11.5" fill="#9c4136">边界：不出现 document / window；不读 localStorage（ai.js 适配层除外）</text>
+      <text x="42" y="467" font-size="11.5" fill="#6d857a">事件示例：stage-start · spawn · player-move · monster-hit · reward-open · case-open</text>
+
+      <rect x="28" y="494" width="660" height="90" rx="8" fill="#f6f4fb" stroke="#d5cfe6"/>
+      <text x="42" y="518" font-size="15" fill="#4b3f70" font-weight="700">适配层</text>
+      <text x="42" y="540" font-size="12" fill="#5f5478">AI.js（离线 / 本地代理 / 直连）· localStorage（bq.endings / bq.ai.settings）· assets 资源</text>
+      <text x="42" y="562" font-size="11.5" fill="#7a7094">外部失败在这里被吸收：超时、CORS、JSON 解析失败、素材 404 → 回退，不阻塞关卡</text>
+
+      <rect x="742" y="244" width="226" height="118" rx="10" fill="#f3f7fb" stroke="#c2d3e2"/>
+      <text x="758" y="270" font-size="14.5" fill="#1d4a66" font-weight="700">Node 代理</text>
+      <text x="758" y="292" font-size="11.5" fill="#587082">tools/server.mjs</text>
+      <text x="758" y="313" font-size="11" fill="#6c8393">静态文件 + /api/chat</text>
+      <text x="758" y="333" font-size="11" fill="#6c8393">Key 只在进程环境</text>
+      <text x="758" y="352" font-size="10.5" fill="#8a6414">30s 超时 / 503 兜底</text>
+
+      <rect x="742" y="414" width="226" height="94" rx="10" fill="#f7f4ee" stroke="#ded0ae"/>
+      <text x="758" y="440" font-size="14.5" fill="#6b4c12" font-weight="700">DeepSeek API</text>
+      <text x="758" y="462" font-size="11" fill="#7a6437">POST /chat/completions</text>
+      <text x="758" y="482" font-size="11" fill="#7a6437">temperature 0.2</text>
+      <text x="758" y="500" font-size="10.5" fill="#8a6a22">只点评处方，不做状态推进</text>
+
+      <line x1="358" y1="180" x2="358" y2="240" stroke="#7d9188" stroke-width="1.5" marker-end="url(#ar)"/>
+      <line x1="378" y1="246" x2="378" y2="186" stroke="#b08a36" stroke-width="1.5" marker-end="url(#ar2)"/>
+      <text x="392" y="214" font-size="10.5" fill="#7d9188">调用动作</text>
+      <text x="392" y="233" font-size="10.5" fill="#b08a36">返回 events</text>
+
+      <line x1="358" y1="316" x2="358" y2="322" stroke="#7d9188" stroke-width="1.5" marker-end="url(#ar)"/>
+      <line x1="378" y1="326" x2="378" y2="320" stroke="#b08a36" stroke-width="1.5" marker-end="url(#ar2)"/>
+
+      <line x1="692" y1="286" x2="736" y2="286" stroke="#7d9188" stroke-width="1.5" marker-end="url(#ar)"/>
+      <text x="700" y="276" font-size="9.5" fill="#7d9188">fetch</text>
+      <line x1="736" y1="312" x2="692" y2="312" stroke="#b08a36" stroke-width="1.5" marker-end="url(#ar2)"/>
+      <line x1="855" y1="366" x2="855" y2="408" stroke="#7d9188" stroke-width="1.5" marker-end="url(#ar)"/>
+      <text x="866" y="390" font-size="9.5" fill="#7d9188">HTTPS</text>
+
+      <text x="742" y="560" font-size="11" fill="#688277">说明：浏览器也可选择直连 API；</text>
+      <text x="742" y="578" font-size="11" fill="#688277">但正式验收推荐代理，避免 CORS 与</text>
+      <text x="742" y="596" font-size="11" fill="#688277">Key 进入 localStorage。</text>
+    </svg>
+  </div>
+
+  <h2>4.2 模块职责与规模</h2>
+  <table class="data compact">
+    <tr><th style="width:18%">层</th><th style="width:12%">规模</th><th>核心模块与职责</th></tr>
+    <tr><td><b>外壳</b></td><td>1 HTML + 1 CSS</td><td>固定脚本顺序；主题、棋盘、HUD、弹窗、CG、响应式全部在 style.css</td></tr>
+    <tr><td><b>规则 core</b></td><td>12 文件 / 约 3,700 行</td><td><code>config</code> 数值与文案、<code>rng</code> 种子随机、<code>grid</code> BFS/视线、<code>stats</code> 派生属性、<code>combat</code> 伤害、<code>skills</code> 冷却、<code>questions</code> 病例与评分、<code>endings</code> 结局、<code>shop</code> 商店、<code>state</code> 建局、<code>monsters</code> 生成/追击/Boss、<code>progression</code> 回合与流程</td></tr>
+    <tr><td><b>编排 main</b></td><td>1 文件 / 约 1,135 行</td><td>界面状态机、动作分发、奖励/病例/对话流程、dev 直达参数、页面内自检</td></tr>
+    <tr><td><b>表现 ui</b></td><td>10 文件 / 约 3,900 行</td><td>棋盘与实体渲染、HUD、病例/商店/API 弹窗、结局 CG、Boss 演出、精灵图、音效/BGM、输入</td></tr>
+    <tr><td><b>适配</b></td><td>1 代理 + 1 AI</td><td>本地静态服务 + DeepSeek 代理；浏览器端离线/代理/直连三种模式与 JSON 契约</td></tr>
+  </table>
+
+  <h2>4.3 三条硬边界</h2>
+  <div class="callout">
+    <h4>边界一：core 不触 DOM</h4>
+    <p>除 <code>ai.js</code> 需要读写 <code>localStorage</code> 外，core 的 12 个模块都能在 Node 里直接 <code>require</code>，不依赖浏览器。这带来两个直接收益：测试不需要 jsdom；平衡模拟可以无头跑 200 局。任何把 <code>document.querySelector</code> 写进 core 的改动都会被拒绝。</p>
+  </div>
+  <div class="callout">
+    <h4>边界二：UI 不改 state</h4>
+    <p>UI 只做三件事：读 state 渲染、把用户输入转成动作调用、消费 core 返回的 events 做动画/音效/提示。它不计算伤害、不决定怪物行动、不直接改 <code>player.hp</code>。这条边界让「表现 bug」与「规则 bug」可以分开定位。</p>
+  </div>
+  <div class="callout">
+    <h4>边界三：动作统一返回 <code>{ok, reason, events}</code></h4>
+    <p>成功时 <code>events</code> 是表现层的唯一输入；失败时 <code>reason</code> 是给玩家看的中文原因。main 只按 <code>ok</code> / <code>reason</code> / <code>events</code> 分支，不复制规则。这样同一套规则既能被 UI 调用，也能被模拟器调用。</p>
+  </div>
+
+  <h2>4.4 一次移动的完整数据流</h2>
+  <div class="flow">
+    <div class="step"><b>输入</b>点击格子 / 方向键<br>main.onTile</div>
+    <div class="arrow">→</div>
+    <div class="step"><b>校验</b>P.movePlayer<br>一格、体力、障碍</div>
+    <div class="arrow">→</div>
+    <div class="step"><b>变更</b>扣体力、移动、tick 冷却<br>Monsters.reactAll</div>
+    <div class="arrow">→</div>
+    <div class="step"><b>事件</b>player-move / monster-move<br>monster-hit / reward-open</div>
+    <div class="arrow">→</div>
+    <div class="step"><b>表现</b>Render.playEvents<br>HUD.update</div>
+  </div>
+  <p>关键点是「先算完，再演」：core 在一次调用里把玩家移动、怪物反应、死亡、回合结束全部算完，返回完整事件列表；UI 再按顺序播放。这样不会出现「动画播到一半状态又变了」的竞态，也让同一次动作可以在模拟器里同步执行、在浏览器里异步演出。</p>
+
+  <h2>4.5 状态机与事件契约</h2>
+  <table class="data compact">
+    <tr><th style="width:14%">phase</th><th style="width:34%">含义</th><th>出口</th></tr>
+    <tr><td><code>battle</code></td><td>战斗回合；可移动/攻击/技能/休息</td><td>全灭 → <code>reward</code>；死亡 → <code>over</code>；第 40 关 Boss 死亡 → <code>rune</code></td></tr>
+    <tr><td><code>question</code></td><td>病例诊疗；阻塞其他行动</td><td>提交 → 回 <code>battle</code></td></tr>
+    <tr><td><code>reward</code></td><td>回合结算、商店、技能/Boss 奖励</td><td>下一关 → <code>battle</code></td></tr>
+    <tr><td><code>rune</code></td><td>终局拾取符文；可自由移动</td><td>踩到符文 → <code>dialogue</code></td></tr>
+    <tr><td><code>dialogue</code></td><td>终局对话</td><td>选择 → <code>ending</code></td></tr>
+    <tr><td><code>over</code> / <code>ending</code></td><td>失败 / 结局结算</td><td>重开或回标题</td></tr>
+  </table>
+  <p>事件是 core 与 UI 之间唯一的表现协议。当前使用的事件包括 <code>stage-start</code>、<code>spawn</code>、<code>boss-intro</code>、<code>player-move</code>、<code>monster-move</code>、<code>monster-hit</code>、<code>player-hit</code>、<code>player-stun</code>、<code>stun-skip</code>、<code>monster-death</code>、<code>reward-open</code>、<code>rune-drop</code>、<code>rune-pickup</code>、<code>case-open</code>、<code>case-answered</code>、<code>defeat</code>。新增表现时优先新增事件，而不是让 UI 去猜 state 的变化。</p>
+
+  <h2>4.6 配置、内容、逻辑三分</h2>
+  <p><code>config.js</code> 是唯一的数值与文案源：40 关、Boss 关、体力、怪物成长、武器、23 个技能、商店、AI 默认值。病例内容在 <code>questions.js</code>（10 个病例，每个含诊断/检查/处方/关键词/解释），结局在 <code>endings.js</code>（12 个结局 + 12 组 CG 素材）。这三层分离让「调数值」「换文案」「加病例」不需要碰规则代码，也让测试可以针对内容做清单校验。</p>
+
+  <h2>4.7 架构决策记录（ADR）</h2>
+  <table class="data compact">
+    <tr><th style="width:16%">决策</th><th style="width:34%">选择</th><th>代价与收益</th></tr>
+    <tr><td>ADR-01</td><td>零依赖、无构建、file:// 可运行</td><td>放弃热更新与模块化开发体验；换来比赛现场零安装、零构建失败</td></tr>
+    <tr><td>ADR-02</td><td>UMD 包装 + 固定 script 顺序</td><td>需要手工维护加载顺序；换来同一份文件既能浏览器运行又能 Node 测试</td></tr>
+    <tr><td>ADR-03</td><td>core / ui / main 分层</td><td>多一层编排代码；换来规则可测试、表现可替换</td></tr>
+    <tr><td>ADR-04</td><td>事件驱动表现</td><td>事件列表需要维护；换来无竞态、可回放、可无头模拟</td></tr>
+    <tr><td>ADR-05</td><td>种子随机（mulberry32）</td><td>需要把随机流注入 state；换来同种子可复现、可回归</td></tr>
+    <tr><td>ADR-06</td><td>离线优先、AI 可插拔</td><td>需要维护本地评分；换来断网可通关、API 失败不阻塞</td></tr>
+  </table>
+
+  <h2>4.8 我如何审查 AI 生成的代码</h2>
+  <p>每次 AI 提交后，我按同一张清单过一遍。它既是代码审查，也是对 Prompt 效果的检查：</p>
+  <table class="data compact">
+    <tr><th style="width:6%">#</th><th style="width:44%">检查项</th><th>不通过时怎么办</th></tr>
+    <tr><td>1</td><td>是否新增了运行时依赖 / 构建步骤？</td><td>拒绝，要求零依赖实现</td></tr>
+    <tr><td>2</td><td>core 是否出现 DOM / window？</td><td>移回 UI；core 保持可 Node 测试</td></tr>
+    <tr><td>3</td><td>UI 是否直接改 state？</td><td>改为调用 Progression</td></tr>
+    <tr><td>4</td><td>动作是否返回 ok/reason/events？</td><td>补契约，main 不复制规则</td></tr>
+    <tr><td>5</td><td>随机是否走 state.rng？</td><td>替换 Math.random；补种子测试</td></tr>
+    <tr><td>6</td><td>数值是否写死在逻辑里？</td><td>移入 config.js</td></tr>
+    <tr><td>7</td><td>是否删除/跳过了测试？</td><td>拒绝，要求补回并解释</td></tr>
+    <tr><td>8</td><td>旧按钮 id / 存档 key / URL 参数是否被改？</td><td>保持兼容或提供迁移</td></tr>
+    <tr><td>9</td><td>API 失败是否有回退？</td><td>补 try/catch 与本地评分</td></tr>
+    <tr><td>10</td><td>是否覆盖移动端 390×844？</td><td>补响应式与真实视口截图</td></tr>
+    <tr><td>11</td><td>事件是否完整、顺序是否确定？</td><td>补事件与 E2E 断言</td></tr>
+    <tr><td>12</td><td>是否有「看起来完成」但无证据的声明？</td><td>要求贴命令输出与截图</td></tr>
+  </table>
+
+  <h2>4.9 为什么不用框架</h2>
+  <p>这是一个刻意的权衡，不是「不会用」。React + Vite 能带来组件化与热更新，但也会带来依赖安装、构建产物、版本漂移与 <code>file://</code> 失效；而本项目的比赛场景要求「评委拿到压缩包，双击就能玩」。零依赖架构牺牲了开发体验，换来了最低的现场风险与最高的可复现性。为了让牺牲可控，我用 UMD 让模块仍可测试、用事件协议让 UI 仍可替换、用配置分离让内容仍可扩展——如果未来要迁移到框架，规则层可以原样复用。</p>
+</section>
+
+<!-- ================= 第 5 章 ================= -->
+<section class="chapter" id="ch5">
+  <div class="ch-head">
+    <div class="ch-num">05</div>
+    <div>
+      <h1>可复现性论证</h1>
+      <div class="ch-sub">ENVIRONMENT · RANDOMNESS · CONTENT · EVIDENCE</div>
+    </div>
+  </div>
+
+  <p class="lead">「可复现」不是一句口号，而是一组可以被别人检查的事实：同一份代码、同一份素材、同一个种子，在另一台干净电脑上得到同样的可观察行为与同样的自动化结果。</p>
+
+  <h2>5.1 复现的五个维度</h2>
+  <table class="data">
+    <tr><th style="width:14%">维度</th><th style="width:36%">问题</th><th>本项目的答案</th></tr>
+    <tr><td><b>环境</b></td><td>需要装什么？版本冲突怎么办？</td><td>只需浏览器；Node 仅用于代理/测试；无依赖、无构建</td></tr>
+    <tr><td><b>构建</b></td><td>产物从哪来？能否重建？</td><td>没有构建；源码即产物；素材随包，重建是可选链路</td></tr>
+    <tr><td><b>随机</b></td><td>同一操作是否得到同一结果？</td><td>玩法随机全部走种子 RNG；同 seed 可复现</td></tr>
+    <tr><td><b>内容</b></td><td>素材、文案、结局是否完整？</td><td>65 个素材文件随包；测试校验清单、尺寸、哈希</td></tr>
+    <tr><td><b>验收</b></td><td>怎么证明它真的能跑？</td><td>119 测试 + 6 组 E2E + 25 截图 + 200 局模拟</td></tr>
+  </table>
+
+  <h2>5.2 环境熵：没有构建，就没有构建失败</h2>
+  <p>前端项目最常见的复现失败不是代码错，而是「装不上」：Node 版本不对、npm 源不通、依赖锁冲突、构建产物没带。这个项目直接取消了这些环节：</p>
+  <div class="kpi-grid">
+    <div class="kpi"><b>0</b><span>运行时 npm 依赖</span></div>
+    <div class="kpi"><b>0</b><span>构建步骤</span></div>
+    <div class="kpi"><b>24</b><span>JS 文件（UMD）</span></div>
+    <div class="kpi"><b>65</b><span>随包素材文件</span></div>
+    <div class="kpi"><b>58.3</b><span>素材总量（MB）</span></div>
+  </div>
+  <p>代理只使用 <code>node:http</code>、<code>node:fs</code>、<code>node:path</code>、<code>node:url</code>；测试只使用 <code>node:test</code>。因此不存在「依赖装不上」这一失败模式。唯一的环境变量是可选的 API Key；不配也能完整通关。</p>
+
+  <h2>5.3 随机性：哪些是确定的，哪些不是</h2>
+  <p>建局时，种子先经过 FNV-1a 哈希，再进入 mulberry32；之后所有玩法随机都从 <code>state.rng</code> 取。种子可以来自 URL 参数 <code>seed=123</code>，也可以由模拟器逐局递增。装饰层另开一条随机流，避免「换个草的贴图」改变地图布局。</p>
+  <table class="data compact">
+    <tr><th style="width:30%">随机源</th><th style="width:16%">是否入种子</th><th>用途</th></tr>
+    <tr><td>地图障碍布局</td><td>是</td><td><code>Grid.createBoard</code> 用注入的 RNG 洗牌，保证连通</td></tr>
+    <tr><td>怪物种类 / 刷新位置</td><td>是</td><td><code>state.rng.weighted</code> / <code>shuffle</code></td></tr>
+    <tr><td>商店库存 / 重roll</td><td>是</td><td><code>Shop.createShop</code> / <code>reroll</code></td></tr>
+    <tr><td>技能三选一 / Boss 奖励</td><td>是</td><td><code>Skills.generateChoices</code></td></tr>
+    <tr><td>暴击判定</td><td>是</td><td><code>Combat</code> 用 <code>state.rng.chance</code></td></tr>
+    <tr><td>Boss 传送 / 特殊技落点</td><td>是</td><td><code>Monsters</code> 用 <code>state.rng.int</code></td></tr>
+    <tr><td>草丛/树丛皮肤</td><td>是（独立流）</td><td><code>decorRng</code>，不影响地图与战斗</td></tr>
+    <tr><td>CG 粒子、震屏角度</td><td>否</td><td>纯表现层 <code>Math.random</code>，不写回 state</td></tr>
+    <tr><td>时间戳 / 游戏时长</td><td>否</td><td>只进入日志与结算展示，不影响判定</td></tr>
+    <tr><td>DeepSeek 点评文本</td><td>外部</td><td>temperature 0.2；评分契约与回退是确定的</td></tr>
+  </table>
+  <div class="callout">
+    <h4>确定性边界</h4>
+    <p>同一 seed + 同一串操作 = 同一状态与同一事件序列。这个结论只覆盖玩法逻辑；AI 点评的自然语言内容不承诺逐字一致，但它返回的 <code>score</code> 与 <code>axes</code> 会被 clamp 到契约范围，解析失败会回退本地评分。离线模式下，整条链路完全确定。</p>
+  </div>
+
+  <h2>5.4 内容固定：素材不是「作者电脑里的文件」</h2>
+  <table class="data compact">
+    <tr><th style="width:26%">内容</th><th style="width:12%">数量</th><th>固定方式 / 测试</th></tr>
+    <tr><td>战役关卡</td><td>40</td><td><code>config.campaign.stages</code>；测试断言 Boss 关为 10/20/30/40</td></tr>
+    <tr><td>AI 病例</td><td>10</td><td>第 4–40 关每 4 关一个；测试校验每题三阶段完整</td></tr>
+    <tr><td>结局</td><td>12</td><td><code>ENDINGS</code> 表；测试断言 12 个全部可达</td></tr>
+    <tr><td>结局剧照 / 缩略图</td><td>12 / 12</td><td>WebP 16:9；测试校验存在、尺寸、图鉴引用</td></tr>
+    <tr><td>结局成片</td><td>4</td><td>H.264 mp4；测试校验可播放链路与回退</td></tr>
+    <tr><td>怪物 / Boss</td><td>9 / 4</td><td>像素立绘随包；配置与素材清单一致</td></tr>
+    <tr><td>职业立绘 / 图集</td><td>2 / 2</td><td>37 帧、300×400；原图 SHA-256 未变</td></tr>
+    <tr><td>技能</td><td>23</td><td><code>CONFIG.skills</code> 与 <code>skillMap</code> 一致</td></tr>
+  </table>
+  <p>两个职业的原图哈希被写进测试：战士 <code>49eb6570…</code>，法师 <code>5cfcfcea…</code>。只要有人「顺手美化」了立绘，测试就会失败——这不是不信任美术，而是保证「我看到的角色」和「评委看到的角色」是同一个。</p>
+
+  <h2>5.5 验收金字塔：从单元到真实浏览器</h2>
+  <table class="data compact">
+    <tr><th style="width:24%">层级</th><th style="width:14%">规模</th><th>覆盖内容</th></tr>
+    <tr><td>单元测试</td><td>约 90</td><td>RNG、网格、战斗、技能、商店、怪物、病例、结局、素材清单</td></tr>
+    <tr><td>集成测试</td><td>约 29</td><td>建局 → 回合 → 结算 → 下一关；病例 → 档案；Boss → 奖励 → 结局</td></tr>
+    <tr><td>页面自检</td><td>1 条</td><td><code>?selftest=1</code> 跑 6 关并输出 PASS/FAIL</td></tr>
+    <tr><td>UI E2E</td><td>6 组</td><td>标题/API/图鉴、开发者模式、图鉴回放、移动/体力/休息/病例、Boss 控制、终局 CG</td></tr>
+    <tr><td>真实视口截图</td><td>25 张</td><td>1440×900 桌面 + 390×844 移动端；运行时错误捕获</td></tr>
+    <tr><td>平衡模拟</td><td>200 局</td><td>战士 23.5% / 法师 18.5%；平均关卡、Token、武器等级</td></tr>
+  </table>
+  <p>这五层不是「越多越好」，而是各自回答不同的问题：单元测试回答「规则对不对」，集成测试回答「流程接没接上」，自检回答「页面能不能跑」，E2E 回答「玩家能不能点」，截图回答「看起来对不对」，模拟回答「数值是否可通关」。</p>
+
+  <h2>5.6 十分钟预算与失败兜底</h2>
+  <p>第 2 章已经给出时间盒。这里补一条关键论证：<b>十分钟之所以成立，是因为最短路径不依赖任何安装</b>。双击 <code>index.html</code> 只需要文件复制；即使 Node、npm、网络全部不可用，游戏仍能进入标题页、完成 40 关、解锁 12 结局。代理与测试是「加分项」，不是「运行前提」。</p>
+  <p>失败兜底同样被设计进链路：API 超时/格式错误 → 本地评分；成片加载失败 → 剧照；剧照失败 → emoji 舞台；localStorage 不可用 → 内存态；视频自动播放被拦截 → 静音播放。任何一条兜底都不会把玩家卡在关卡里。</p>
+
+  <h2>5.7 已知非确定性</h2>
+  <table class="data compact">
+    <tr><th style="width:26%">来源</th><th style="width:20%">影响</th><th>隔离方式</th></tr>
+    <tr><td>CG 粒子 / 震屏</td><td>视觉细节</td><td>只读 <code>Math.random</code>，不进入 state</td></tr>
+    <tr><td>游戏时长 / 时间戳</td><td>结算展示</td><td>只写日志，不参与判定</td></tr>
+    <tr><td>DeepSeek 点评文本</td><td>反馈措辞</td><td>契约化 JSON；失败回退；评分有上下界</td></tr>
+    <tr><td>浏览器视频解码</td><td>首帧时间</td><td>静音兜底 + 剧照回退</td></tr>
+    <tr><td>字体渲染</td><td>换行/字宽</td><td>截图验收以 Chromium 为准；文档不承诺像素级跨浏览器一致</td></tr>
+  </table>
+
+  <h2>5.8 可复现性声明</h2>
+  <table class="data">
+    <tr><th style="width:50%">可以保证</th><th>不保证</th></tr>
+    <tr><td>同一份代码 + 素材 + seed → 同一玩法状态与事件序列</td><td>不同浏览器/字体下的像素级视觉一致</td></tr>
+    <tr><td>离线模式 12 结局全部可达</td><td>DeepSeek 点评的自然语言逐字一致</td></tr>
+    <tr><td><code>npm test</code> 119/119；<code>npm run sim</code> 数值可复现</td><td>不同机器上截图逐像素一致</td></tr>
+    <tr><td>十分钟内从解压到可玩</td><td>没有浏览器/没有解压工具的极端环境</td></tr>
+    <tr><td>API 失败不阻塞关卡</td><td>外部 API 的可用性与配额</td></tr>
+  </table>
+</section>
+
+<!-- ================= 第 6 章 ================= -->
+<section class="chapter" id="ch6">
+  <div class="ch-head">
+    <div class="ch-num">06</div>
+    <div>
+      <h1>三次核心迭代的 Prompt 链</h1>
+      <div class="ch-sub">PROMPT → AI PROPOSAL → BUG → ROOT CAUSE → FIX → EVIDENCE</div>
+    </div>
+  </div>
+
+  <p class="lead">这一章不展示「漂亮的 Prompt」，而展示 Prompt 如何在一来一回中收敛：AI 第一次给的建议往往不完全可用，关键是我如何拒绝、如何让它先诊断、如何用证据结束一轮。</p>
+
+  <table class="data">
+    <tr><th style="width:18%">迭代</th><th style="width:24%">核心目标</th><th style="width:26%">AI 第一次建议</th><th>真正的转折</th></tr>
+    <tr><td><b>一、40 关体力追击</b></td><td>行动点制 → 体力制；怪物每次行动后追击；自动结算</td><td>保留行动点、加补刷、引入寻路库、拆 ES Module</td><td>拒绝后要求「先复述约束」；Bug 阶段要求「先诊断再改」</td></tr>
+    <tr><td><b>二、病例与 12 结局</b></td><td>三步病例、七维档案、12 结局、AI 点评可回退</td><td>让模型评分三步并直接决定结局、引入 SDK</td><td>改为「本地判分 + AI 只评处方」；让 AI 写可达性矩阵</td></tr>
+    <tr><td><b>三、精灵动画管线</b></td><td>37 帧、固定画布、脚底锚点、无白边/绿边</td><td>固定绿幕、按包围盒缩放、原生 24fps</td><td>把「看起来不对」翻译成脚底 y、bbox、边缘像素比例</td></tr>
+  </table>
+
+  <h2>6.1 迭代一：从行动点到体力追击</h2>
+  <p><b>初始 Prompt（节选）：</b></p>
+  <div class="prompt-box">把「行动点 + 手动结束回合」改造成「体力 + 自动回合」：
+每次只能移动 1 格，移动 -1 体力，攻击 -1 体力，技能 0；
+每次行动后怪物按 BFS 最短路靠近，每 2 次反应攻击 1 次；
+只在回合开始刷怪；清空怪物自动结算；保持零依赖、双击可玩。
+先不要写代码：复述约束、列改动文件、指出风险，等我确认。</div>
+  <p><b>AI 建议：</b>保留行动点，把「结束回合」改名；每击杀补刷一只；用 A* 与 <code>pathfinding</code> 库；把 main.js 拆成 ES Module。<b>我的拒绝：</b>逐条指出 5 处违反约束，要求它解释 BFS 在 9×9 上的复杂度、给出没有手动结束回合的状态机、列出「点击职业卡 → 第一只怪出现」的完整调用链。</p>
+  <p><b>Bug：</b>用户实际点击后报告「API 设置没反应、结局图鉴没反应、开始冒险无法移动且不刷怪」。<b>诊断 Prompt：</b>禁止改代码，要求按可能性列 5 条根因假设、每条给一个验证方法、解释「为什么单元测试全绿却没抓到」。AI 定位到 <code>main.js</code> 仍是旧控制器：按钮未绑定、正常开局没调用 <code>startRound</code>、HUD 仍读旧 AP 字段。</p>
+  <p><b>修复 Prompt（节选）：</b></p>
+  <div class="prompt-box">按根因最小修复，不要重构：
+1) init() 补绑 #btn-api / #btn-gallery / #btn-dev；
+2) 正常路径：点击职业 → startRun → createRun → mount → startRound → handleRoundEvents；
+3) HUD 读 state.player.stamina，删除 AP 残留；
+4) 加一条从标题页开始的 E2E，断言怪物 ≥1、可移动格 ≥1；
+5) 跑 npm test 与 npm run screens -- --e2e，贴输出。</div>
+  <p><b>证据：</b>119/119 测试；E2E 走通正常开局、移动扣体力、休息、自动结算、病例、Boss 控制、终局 CG；运行时错误 0。<b>教训：</b>单元测试全绿 ≠ 游戏可玩；必须有一条从标题页开始的 E2E。</p>
+
+  <h2>6.2 迭代二：病例、七维档案与 12 结局</h2>
+  <p><b>初始 Prompt（节选）：</b></p>
+  <div class="prompt-box">把固定选择题升级为「AI 误解诊疗」：10 个病例，第 4–40 关每 4 关一个；
+诊断 → 检查（最多 2 项）→ 处方（选项 + 自由文字）；
+七维认知档案；12 结局 + 12 CG；最终对话 9 个选项。
+配 DeepSeek 时只点评处方，返回严格 JSON；失败必须回退本地评分，不能卡关。
+先给数据结构与评分分工，不要写代码。</div>
+  <p><b>AI 建议：</b>让模型生成病例、评分三步、直接决定结局；把整段对话历史发给模型；用官方 SDK。<b>我的拒绝：</b>结局由模型决定就无法写确定性测试；模型重复评分诊断/检查会让分数不可解释；SDK 违反零依赖；整段历史有隐私与 token 成本。最终分工：诊断 35 分、检查 30 分由本地规则；处方 35 分在 AI 模式下由模型替换，失败回退。</p>
+  <p><b>Bug：</b>测试枚举发现 <code>promptMaster</code> / <code>privacyGuard</code> 只能靠 axes 阈值碰运气，最终对话没有显式入口；同时模型返回 ```json 代码围栏时解析失败，反馈框为空。<b>诊断 Prompt：</b>要求 AI 枚举 9 个 <code>finalChoice</code> × 七维边界组合，输出每个结局的最短触发路径与「只能靠测试构造 axes 到达」的清单；同时列 5 种非纯 JSON 形式与解析策略。</p>
+  <p><b>修复 Prompt（节选）：</b>补 <code>prompt/privacy/teach</code> 三个显式选项与 <code>resolveEnding</code> 分支；加 <code>parseJsonLoose</code>（剥围栏 → 截取首尾大括号）；解析失败 toast 并回退本地评分；补「12 结局全部可达」「代码围栏可解析」测试。<b>证据：</b>12 结局全部可达，9 个终局选项均有确定映射，119/119 通过。<b>教训：</b>「有 12 个结局」不等于「12 个结局可达」；要让 AI 证明可达性，而不是只写分支。</p>
+
+  <h2>6.3 迭代三：37 帧精灵动画与抠图</h2>
+  <p><b>初始 Prompt（节选）：</b></p>
+  <div class="prompt-box">把立绘 + 3.04s/24fps 攻击视频转成 37 帧图集：
+300×400 画布、8×5、WebP；待机与攻击共用脚底锚点（格子高度 82%）；
+角色本体约 1.6 格高；2.5 倍速播放；命中帧落在 0.6–0.7s；
+不改角色颜色/比例；透明区域不能挡点击。
+先说明抠图、锚点、验证方案，不要直接写完整脚本。</div>
+  <p><b>AI 建议：</b>固定绿幕键色；每帧按非透明包围盒裁剪后缩放到 300×400；原生 24fps；CSS <code>mix-blend-mode</code> 去白边。<b>我的拒绝：</b>魔法师视频背景是白→绿渐变，固定键色会留白边；按包围盒缩放会让角色大小跳动；24fps 太慢；混合模式受棋盘背景影响。要求它给出可测量指标：脚底 y、角色高度、透明像素占比、边缘白/绿像素比例。</p>
+  <p><b>Bug：</b>白边、绿边、待机/攻击比例跳变、脚底漂移、透明区域挡点击、命中帧偏晚。<b>诊断 Prompt：</b>禁止调参，先写脚本输出首帧/命中帧/末帧的四角与边缘中位色、bbox、脚底偏差、边缘像素分布；回答「白边是键色残留还是反预乘错误」「比例跳变是画布还是缩放」「命中帧用第几帧、按什么公式」。</p>
+  <p><b>修复 Prompt（节选）：</b>构建期逐帧取边缘中位色 + 泛洪填充 + 反预乘 + 去色边；固定 300×400 画布与 <code>footFraction</code>；输出 manifest；渲染期 <code>pointer-events:none</code>、2.5 倍速、按 impactFrame 触发命中。<b>证据：</b>战士 37 帧/214px/脚底 351.1/命中 21；法师 37 帧/164.1px/脚底 293.8/命中 19；两套均 300×400；专项各 8 张截图；原图哈希未变。<b>教训：</b>把审美问题翻译成可测量指标，AI 才能稳定修。</p>
+
+  <h2>6.4 三次迭代的共同结构</h2>
+  <table class="data compact">
+    <tr><th style="width:18%">阶段</th><th style="width:40%">我做的事</th><th>AI 做的事</th></tr>
+    <tr><td>目标</td><td>写可观察行为与验收命令</td><td>复述目标、列计划</td></tr>
+    <tr><td>约束</td><td>给不变量、文件白名单、非目标</td><td>调整方案或指出冲突</td></tr>
+    <tr><td>实施</td><td>一次只放一个文件/一个动作</td><td>最小改动 + 自测</td></tr>
+    <tr><td>Bug</td><td>禁止先改，要求根因假设与验证</td><td>定位根因、给修复点</td></tr>
+    <tr><td>回归</td><td>要求命令输出、E2E、截图</td><td>补测试、修回归</td></tr>
+  </table>
+  <p class="small">完整的 Prompt 原文、AI 建议摘要、拒绝理由与修复命令见独立文档 <b>《AI 交互 Prompt 链》</b>；本文只保留论证所需的链路。该文档还附有 6 条可直接复用的有效 Prompt（需求冻结、架构守门、根因诊断、最小修复、验收证据、复现文档）。</p>
+</section>
+
+<!-- ================= 第 7 章 ================= -->
+<section class="chapter" id="ch7">
+  <div class="ch-head">
+    <div class="ch-num">07</div>
+    <div>
+      <h1>开发者模式与验收路径</h1>
+      <div class="ch-sub">ONE BUTTON, ONE CONFIRMATION, TWELVE ENDINGS</div>
+    </div>
+  </div>
+
+  <p class="lead">比赛现场最尴尬的不是游戏难，而是评委没有时间打到第 40 关。开发者模式解决的是「验收效率」问题，但它必须被限制成「只解锁图鉴、不破坏进度、不可误触」。</p>
+
+  <h2>7.1 入口与二次确认</h2>
+  <p>标题页新增「🛠 开发者模式」按钮，与音效、音乐、API 设置并列。点击后不会立刻写入，而是弹出确认框，明确三件事：</p>
+  <table class="data compact">
+    <tr><th style="width:26%">确认框内容</th><th>作用</th></tr>
+    <tr><td>「面向比赛评委、验收与录屏」</td><td>说明使用场景，普通玩家不需要</td></tr>
+    <tr><td>「把全部 12 个结局写入本机图鉴，并打开图鉴」</td><td>说明操作结果</td></tr>
+    <tr><td>「只改 localStorage 的 bq.endings，不上传数据」</td><td>说明影响范围与隐私边界</td></tr>
+    <tr><td>「不修改关卡进度、认知档案或战斗数值」</td><td>说明不会破坏存档/平衡</td></tr>
+    <tr><td>「解锁后无法在本界面撤销」+ 恢复方法</td><td>说明不可逆性与恢复路径</td></tr>
+  </table>
+  <p>按钮文案是「确认解锁全部 CG」而不是「确定」，避免评委误以为是普通确认。点「取消」不会写入任何数据；E2E 专门断言了这一点。</p>
+
+  <figure>
+    <img src="../artifacts/shots/25-dev-confirm.png" alt="开发者模式确认框">
+    <figcaption>开发者模式二次确认：范围、隐私、不可逆性与恢复方法都写在弹窗里；取消不写入，确认后直接打开 12/12 图鉴。</figcaption>
+  </figure>
+
+  <h2>7.2 安全边界</h2>
+  <div class="two-col">
+    <div>
+      <h3>会做什么</h3>
+      <p>把 12 个结局 id 合并写入 <code>localStorage['bq.endings']</code>（去重）；刷新标题页的图鉴计数；打开结局图鉴，允许逐个重播剧照/成片。</p>
+      <h3>不会做什么</h3>
+      <p>不修改 <code>App.state</code>、关卡、生命、Token、认知档案；不跳过剧情/战斗；不写入服务器；不修改 <code>bq.ai.settings</code>。</p>
+    </div>
+    <div>
+      <h3>恢复方式</h3>
+      <p>浏览器控制台执行 <code>localStorage.removeItem('bq.endings')</code> 后刷新。图鉴回到 0/12，已解锁的 CG 不会真正删除，只是不再显示为已收集。</p>
+      <h3>等价入口</h3>
+      <p><code>index.html?unlock=all&amp;screen=gallery</code>，用于自动截图与无头验收；两者最终调用同一个 <code>EndingsUI.unlockAll()</code>。</p>
+    </div>
+  </div>
+
+  <div class="callout gold">
+    <h4>为什么保留 URL 参数</h4>
+    <p>开发者模式是「人」的入口，URL 参数是「自动化」的入口。两者共用同一个解锁函数，避免出现「按钮能解锁、截图脚本却是另一套逻辑」的分叉。E2E 会分别验证：按钮取消不写入、确认后 12/12、URL 参数直接打开完整图鉴。</p>
+  </div>
+
+  <h2>7.3 60 秒评委验收脚本</h2>
+  <table class="data compact">
+    <tr><th style="width:10%">秒</th><th style="width:44%">动作</th><th>预期</th></tr>
+    <tr><td>0–10</td><td>双击 index.html</td><td>标题页、图鉴 0/12、离线状态</td></tr>
+    <tr><td>10–20</td><td>点「🛠 开发者模式」→ 取消</td><td>确认框出现；取消后图鉴仍为 0/12</td></tr>
+    <tr><td>20–30</td><td>再次点开 → 确认解锁</td><td>图鉴 12/12，自动打开</td></tr>
+    <tr><td>30–45</td><td>点「真正理解 AI」→ 看剧照/成片</td><td>CG 正常播放，可跳过</td></tr>
+    <tr><td>45–60</td><td>关闭图鉴 → 开始冒险 → 选职业 → 移动一步</td><td>棋盘、怪物、体力变化正常</td></tr>
+  </table>
+  <p>如果评委只有 30 秒：直接看标题页 → 开发者模式确认框 → 12/12 图鉴 → 点开任意 CG。这条路径不需要打一关，也不依赖 API。</p>
+
+  <h2>7.4 设计取舍：为什么不是「默认全解锁」</h2>
+  <p>结局收集本身是正常玩家的长期目标。如果默认全解锁，会破坏「做出不同选择 → 看到不同归途」的正反馈；如果藏在控制台或 URL 里，评委又很难在短时间内找到。开发者模式选择了一条折中路径：<b>入口可见、动作可逆、影响范围明确、必须二次确认</b>。它把「验收效率」与「玩家体验」分开，而不是用同一个默认值服务两类人。</p>
+  <p>二次确认不是「多点一下」的障碍，而是一份用户契约：它告诉使用者这次操作会写什么、不会写什么、如何恢复。取消分支不写入任何数据，确认分支只合并结局 id；这条边界由 E2E 专门守护，避免后续迭代把「开发者模式」误改成「跳过全部剧情」或「直接通关」。</p>
+</section>
+
+<!-- ================= 第 8 章 ================= -->
+<section class="chapter" id="ch8">
+  <div class="ch-head">
+    <div class="ch-num">08</div>
+    <div>
+      <h1>边界、风险与结论</h1>
+      <div class="ch-sub">WHAT IS GUARANTEED &amp; WHAT IS NOT</div>
+    </div>
+  </div>
+
+  <p class="lead">一份可信的技术文档，应该主动说出自己不能保证什么。以下边界不是「免责声明」，而是设计选择的结果。</p>
+
+  <h2>8.1 已知边界</h2>
+  <table class="data">
+    <tr><th style="width:22%">边界</th><th>说明</th></tr>
+    <tr><td><b>单机单人</b></td><td>不做联机、账号、云存档；刷新即重开，只有结局解锁写 localStorage。</td></tr>
+    <tr><td><b>AI 是可选增强</b></td><td>病例点评可调用 DeepSeek，也可完全离线；离线模式不调用任何外部服务。</td></tr>
+    <tr><td><b>浏览器依赖</b></td><td>依赖现代浏览器的 ES2020、WebP、H.264、WebAudio；极旧浏览器可能无法播放成片。</td></tr>
+    <tr><td><b>美术为原创/授权素材</b></td><td>角色、怪物、结局 CG 由作者提供；项目不包含第三方版权素材的分发授权。</td></tr>
+    <tr><td><b>数值平衡是启发式</b></td><td>200 局模拟的胜率只代表启发式 Bot，不等于人类玩家体验；它是回归基线，不是难度证明。</td></tr>
+  </table>
+
+  <h2>8.2 风险与缓解</h2>
+  <table class="data compact">
+    <tr><th style="width:30%">风险</th><th style="width:18%">影响</th><th>缓解</th></tr>
+    <tr><td>现场没有网络 / API 不可用</td><td>AI 点评缺失</td><td>离线模式；本地评分；完整 12 结局</td></tr>
+    <tr><td>评委机器没有 Node</td><td>无法跑测试/代理</td><td>双击即玩；测试为可选证据</td></tr>
+    <tr><td>端口占用 / 安全软件</td><td>代理起不来</td><td>改 <code>PORT</code>；或直接用 file://</td></tr>
+    <tr><td>视频解码差异</td><td>成片不播</td><td>静音兜底 → 剧照 → emoji 舞台</td></tr>
+    <tr><td>误触开发者模式</td><td>提前解锁图鉴</td><td>二次确认；取消不写入；可控制台恢复</td></tr>
+    <tr><td>AI 生成代码回归</td><td>旧功能坏掉</td><td>五道闸门 + 119 测试 + 6 组 E2E</td></tr>
+  </table>
+
+  <h2>8.3 结论</h2>
+  <p>《大肥鱼历险记》最终交付的不仅是一款能玩的游戏，更是一套「如何与 AI 一起做工程」的样本：</p>
+  <p><b>在意图控制上</b>，我把「更好玩」翻译成可观察行为，把「最好的架构」翻译成不变量与文件白名单，把「修一下」翻译成「先诊断根因，再最小修复」。五道闸门让 AI 的产出从「看起来对」变成「可以验收」。</p>
+  <p><b>在架构上</b>，规则、表现、编排、适配四层分离，core 可 Node 测试，UI 只消费事件，动作统一返回 <code>{ok, reason, events}</code>。这些边界不是事后总结，而是在 Prompt 里事先写死的约束。</p>
+  <p><b>在可复现性上</b>，零依赖、无构建、素材随包、种子随机、119 个测试、25 张截图、6 组 E2E、200 局模拟，共同构成一条可以被别人重复执行的证据链。十分钟复现不是营销话术，而是「最短路径不依赖安装」的直接结果。</p>
+  <p>如果只用一句话总结这个项目：<b>把 AI 当成一个能力很强但需要边界的工程伙伴——给它事实、给它约束、给它验收，然后让它用代码证明自己。</b></p>
+</section>
+
+<!-- ================= 附录 ================= -->
+<section class="chapter appendix" id="appA">
+  <div class="ch-head">
+    <div class="ch-num">A</div>
+    <div>
+      <h1>附录：命令、变量与文件地图</h1>
+      <div class="ch-sub">ONE-PAGE CHEAT SHEET</div>
+    </div>
+  </div>
+
+  <h2>A.1 常用命令</h2>
+  <table class="data compact">
+    <tr><th style="width:34%">命令</th><th>作用</th></tr>
+    <tr><td><code>npm start</code></td><td>启动静态服务 + API 代理（默认 8123）</td></tr>
+    <tr><td><code>npm test</code></td><td>119 个单元/集成测试</td></tr>
+    <tr><td><code>npm run sim</code></td><td>200 局 40 关平衡模拟</td></tr>
+    <tr><td><code>npm run screens</code></td><td>25 张截图 + 6 组 E2E + 运行时错误检查</td></tr>
+    <tr><td><code>python docs/build_pdf.py</code></td><td>重建技术文档 PDF（需 Chrome + Python + pypdf；自动回填目录页码并加书签）</td></tr>
+  </table>
+
+  <h2>A.2 环境变量</h2>
+  <div class="prompt-box">DEEPSEEK_API_KEY=          # 必填（仅代理模式）
+DEEPSEEK_MODEL=deepseek-chat
+DEEPSEEK_BASE_URL=https://api.deepseek.com
+PORT=8123</div>
+
+  <h2>A.3 调试 URL 参数（节选）</h2>
+  <table class="data compact">
+    <tr><th style="width:30%">参数</th><th>用途</th></tr>
+    <tr><td><code>dev=1</code></td><td>跳过标题直接开局</td></tr>
+    <tr><td><code>class=warrior|mage</code></td><td>职业</td></tr>
+    <tr><td><code>stage=20</code></td><td>从指定关开始</td></tr>
+    <tr><td><code>seed=123</code></td><td>固定随机种子</td></tr>
+    <tr><td><code>unlock=all</code></td><td>解锁全部结局（等价开发者模式）</td></tr>
+    <tr><td><code>screen=gallery|api|story|class</code></td><td>直达页面</td></tr>
+    <tr><td><code>panel=final|rune|shop|ending-…</code></td><td>直达终局/商店/结局</td></tr>
+    <tr><td><code>selftest=1</code></td><td>页面内自检</td></tr>
+  </table>
+
+  <h2>A.4 本地存储键</h2>
+  <table class="data compact">
+    <tr><th style="width:30%">键</th><th>内容</th></tr>
+    <tr><td><code>bq.endings</code></td><td>已解锁结局 id 数组（开发者模式写入）</td></tr>
+    <tr><td><code>bq.ai.settings</code></td><td>API 模式、地址、模型、直连 Key（仅直连模式）</td></tr>
+  </table>
+
+  <h2>A.5 文件地图</h2>
+  <table class="data compact">
+    <tr><th style="width:38%">路径</th><th>说明</th></tr>
+    <tr><td><code>index.html</code></td><td>页面骨架与固定脚本顺序</td></tr>
+    <tr><td><code>js/core/</code></td><td>12 个规则模块（可在 Node require）</td></tr>
+    <tr><td><code>js/ui/</code></td><td>10 个表现模块（DOM/动画/音效）</td></tr>
+    <tr><td><code>js/main.js</code></td><td>控制器与界面状态机</td></tr>
+    <tr><td><code>tools/server.mjs</code></td><td>静态服务 + DeepSeek 代理 + .env 读取</td></tr>
+    <tr><td><code>tools/simulate.js</code></td><td>无头平衡模拟</td></tr>
+    <tr><td><code>tools/capture.mjs</code></td><td>真实视口截图 + E2E</td></tr>
+    <tr><td><code>tests/</code></td><td>119 个单元/集成测试</td></tr>
+    <tr><td><code>assets/</code></td><td>角色、怪物、地图、传送门、结局 CG、BGM</td></tr>
+    <tr><td><code>docs/</code></td><td>复现指南、Prompt 链、技术文档</td></tr>
+  </table>
+
+  <p class="small" style="margin-top:6mm">文档结束。版本 v1.0 · 2026 年 11 月 · 本文由项目真实代码、测试与截图整理；命令与预期结果以仓库当前状态为准。</p>
+</section>
+
+</body>
+</html>
+
+</body>
+</html>
