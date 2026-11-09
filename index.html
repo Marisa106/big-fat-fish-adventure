@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07110f">
+  <title>大肥鱼历险记 · DeepSeek 认知冒险</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 标题 -->
+    <section id="screen-title" class="screen screen-title">
+      <div class="title-orb orb-a" aria-hidden="true"></div>
+      <div class="title-orb orb-b" aria-hidden="true"></div>
+      <div class="title-orb orb-c" aria-hidden="true"></div>
+      <div class="title-stars" aria-hidden="true"></div>
+      <div class="title-card">
+        <h1 class="title-text">
+          <img class="title-logo" src="assets/title/title-logo.webp" alt="大肥鱼历险记" draggable="false">
+        </h1>
+        <p class="title-sub">DeepSeek 认知冒险</p>
+        <div class="title-actions">
+          <button id="btn-start" class="btn btn-primary" type="button">开始冒险</button>
+          <button id="btn-gallery" class="btn" type="button">结局图鉴</button>
+          <button id="btn-rules" class="btn" type="button">玩法说明</button>
+        </div>
+        <div class="title-meta">
+          <button id="btn-mute-title" class="btn btn-small" type="button">🔊 音效开</button>
+          <button id="btn-music-title" class="btn btn-small" type="button">🎵 音乐开</button>
+          <button id="btn-api" class="btn btn-small" type="button">⚙ API 设置</button>
+          <span id="ai-status" class="ai-status"></span>
+          <span id="best-record" class="best-record"></span>
+        </div>
+      </div>
+      <p class="title-foot">在 AI 认知森林里打败误解怪物，处理 AI 使用病例，拿回传送符文，走向属于你的结局。</p>
+    </section>
+
+    <!-- 剧情 -->
+    <section id="screen-story" class="screen screen-story hidden">
+      <div class="story-card">
+        <h2 class="story-title">掉进认知森林</h2>
+        <div id="story-lines" class="story-lines"></div>
+        <div class="story-actions">
+          <button id="btn-story-next" class="btn btn-primary" type="button">继续</button>
+          <button id="btn-story-skip" class="btn" type="button">跳过</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 选职业 -->
+    <section id="screen-class" class="screen screen-class hidden">
+      <div class="class-head">
+        <h2>选择你的职业</h2>
+        <p>两条道路，一只 DeepSeek 小鲸鱼。选好就出发。</p>
+      </div>
+      <div id="class-cards" class="class-cards"></div>
+      <button id="btn-class-back" class="btn btn-small class-back" type="button">← 返回标题</button>
+    </section>
+
+    <!-- 游戏主界面 -->
+    <section id="screen-game" class="screen screen-game hidden">
+      <header id="topbar" class="topbar"></header>
+      <main class="game-main">
+        <div class="board-frame" id="board-frame">
+          <div id="board" class="board" role="grid" aria-label="AI 认知森林棋盘"></div>
+          <div id="board-fx" class="board-fx"></div>
+          <div id="stage-banner" class="stage-banner hidden"></div>
+        </div>
+        <aside id="sidebar" class="sidebar"></aside>
+      </main>
+      <footer id="dock" class="dock"></footer>
+    </section>
+
+    <div id="modal-root" class="modal-root hidden"></div>
+    <div id="cine-root" class="cine-root hidden"></div>
+    <div id="toast-root" class="toast-root"></div>
+    <div id="selftest-result" hidden></div>
+  </div>
+
+  <audio id="bgm" loop preload="auto" src="assets/audio/bgm.mp3"></audio>
+
+  <script src="js/core/config.js"></script>
+  <script src="js/core/rng.js"></script>
+  <script src="js/core/grid.js"></script>
+  <script src="js/core/stats.js"></script>
+  <script src="js/core/combat.js"></script>
+  <script src="js/core/skills.js"></script>
+  <script src="js/core/questions.js"></script>
+  <script src="js/core/endings.js"></script>
+  <script src="js/core/shop.js"></script>
+  <script src="js/core/state.js"></script>
+  <script src="js/core/ai.js"></script>
+  <script src="js/core/monsters.js"></script>
+  <script src="js/core/progression.js"></script>
+  <script src="js/ui/dom.js"></script>
+  <script src="js/ui/audio.js"></script>
+  <script src="js/ui/bgm.js"></script>
+  <script src="js/ui/sprite.js"></script>
+  <script src="js/ui/render.js"></script>
+  <script src="js/ui/hud.js"></script>
+  <script src="js/ui/modals.js"></script>
+  <script src="js/ui/endings.js"></script>
+  <script src="js/ui/cinematics.js"></script>
+  <script src="js/ui/input.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
